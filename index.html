@@ -18,15 +18,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684079651344">
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684158142350">
 
-<link rel="stylesheet" href="/css/style.css?v=1684079651344">
+<link rel="stylesheet" href="/css/style.css?v=1684158142350">
 
 
 
 
     
-        <link rel="stylesheet" href="/custom.css?v=1684079651344">
+        <link rel="stylesheet" href="/custom.css?v=1684158142350">
     
 
 
@@ -36,7 +36,7 @@
 <script src="/lib/lax.min.js" async></script>
 
 
-<script async src="/js/app.js?v=1684079651344"></script>
+<script async src="/js/app.js?v=1684158142350"></script>
 
  
 
@@ -57,9 +57,9 @@
         </a>
     </div>
     <div class="nexmoe-count">
-        <div><span>Articles</span>1</div>
-        <div><span>Tags</span>0</div>
-        <div><span>Categories</span>0</div>
+        <div><span>文章</span>1</div>
+        <div><span>标签</span>0</div>
+        <div><span>分类</span>0</div>
     </div>
     <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
         
@@ -84,7 +84,7 @@
             </div>
         </a>
         
-        <a class="nexmoe-list-item mdui-list-item mdui-ripple true" href="/" title="技术栈">
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/pending.html" title="技术栈">
             <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
             <div class="mdui-list-item-content">
                 技术栈
@@ -106,7 +106,7 @@
     <div class="nexmoe-widget nexmoe-search">
          
             <form id="search_form" action_e="https://cn.bing.com/search?q=site:hawcat.cn" onsubmit="return search();">
-                <label><input id="search_value" name="q" type="search" placeholder="Search"></label>
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
             </form>
          
     </div>
@@ -187,7 +187,7 @@
         
         
   <div class="nexmoe-widget-wrap">
-    <h3 class="nexmoe-widget-title">Archive</h3>
+    <h3 class="nexmoe-widget-title">文章归档</h3>
     <div class="nexmoe-widget">
       <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">1</span></li></ul>
     </div>
@@ -199,7 +199,7 @@
         
         
   <div class="nexmoe-widget-wrap">
-    <h3 class="nexmoe-widget-title">Recent Posts</h3>
+    <h3 class="nexmoe-widget-title">最新文章</h3>
     <div class="nexmoe-widget">
       <ul>
         
@@ -213,26 +213,6 @@
 
     
         
-        <div class="nexmoe-widget-wrap">
-    <div class="nexmoe-widget nexmoe-link">
-		<ul>
-        
-		</ul>
-    </div>
-</div>
-<style>
-.nexmoe-widget-wrap .nexmoe-link ul li a {
-    text-align : center;
-}
-.nexmoe-widget-wrap .nexmoe-link ul li a img {
-    max-width : 100%;
-}
-.nexmoe-widget-wrap .nexmoe-link ul li a p {
-    margin: 10px 0;
-}
-</style>
-
-    
    
     <div class="nexmoe-copyright">
         &copy; 2023 hawcat
@@ -291,7 +271,7 @@
 				<input
 					class="search-input"
 					type="text"
-					placeholder="Search"
+					placeholder="搜索"
 					oninput="sinput();"
 				/>
 			</div>
