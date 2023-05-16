@@ -1,0 +1,508 @@
+<!doctype html>
+<html lang="zh"><head>
+<title>ESP32 - 使用开发板做一个硬件状态监控器！ - hawcat的时光轴</title>
+<meta charset="UTF-8">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta name="description" content="声明：视频教程请参考B站UP日出东水，表盘图片版权归原作者所有。这里是参照该UP主写的教程文章，也提供我自己的一些想法。在我着手做的过程中，UP也给予了我许多帮助。 材料清单表1.ESP32 WROOM32(我是用的S2焊好排针的版本，不过后来装进去的时候除了问题，模具没调。带WIFI功能的这个板子应该都行，详情参照乐鑫ESP32官网)  2.电压表两个，最大量程3.3V(我用的3V UP主是1V">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP32 - 使用开发板做一个硬件状态监控器！">
+<meta property="og:url" content="https://hawcat.cn/2022/04/12/esp32/index.html">
+<meta property="og:site_name" content="hawcat的时光轴">
+<meta property="og:description" content="声明：视频教程请参考B站UP日出东水，表盘图片版权归原作者所有。这里是参照该UP主写的教程文章，也提供我自己的一些想法。在我着手做的过程中，UP也给予了我许多帮助。 材料清单表1.ESP32 WROOM32(我是用的S2焊好排针的版本，不过后来装进去的时候除了问题，模具没调。带WIFI功能的这个板子应该都行，详情参照乐鑫ESP32官网)  2.电压表两个，最大量程3.3V(我用的3V UP主是1V">
+<meta property="og:locale">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584731868">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584766525">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584808208">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584850982">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584875984">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584940026">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584947681">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584947681">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673585011190">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673585043313">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673585106929">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673585075234">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673585124807">
+<meta property="og:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673585124838">
+<meta property="article:published_time" content="2022-04-12T04:00:12.000Z">
+<meta property="article:modified_time" content="2023-05-16T14:35:21.691Z">
+<meta property="article:author" content="hawcat">
+<meta property="article:tag" content="ARM">
+<meta property="article:tag" content="ESP32">
+<meta property="article:tag" content="C#">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.hawcat.cn/articlePicture/hawcat11673584731868">
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684249852854">
+
+<link rel="stylesheet" href="/css/style.css?v=1684249852854">
+
+
+
+
+    
+        <link rel="stylesheet" href="/custom.css?v=1684249852854">
+    
+
+
+
+<script src="/lib/mdui_043tiny/mdui.js" async></script>
+<script src="/lib/fancybox/fancybox.umd.js" async></script>
+<script src="/lib/lax.min.js" async></script>
+
+
+<script async src="/js/app.js?v=1684249852855"></script>
+
+ 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4D4ZJ9G024"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-4D4ZJ9G024");
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head><body class="nexmoe mdui-drawer-body-left"><div id="nexmoe-background"><div class="nexmoe-bg" style="background-image: url(https://cdn.hawcat.cn/EuropeFromISS_ZH-CN0722816540_UHD.jpg)"></div><div class="mdui-appbar mdui-shadow-0"><div class="mdui-toolbar"><a class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: &#039;#drawer&#039;, swipe: true}" title="menu"><i class="mdui-icon nexmoefont icon-menu"></i></a><div class="mdui-toolbar-spacer"></div><a class="mdui-btn mdui-btn-icon" href="/" title="hawcat"><img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat"></a></div></div></div><div id="nexmoe-header"><div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="hawcat">
+            <img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat" alt="hawcat">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>16</div>
+        <div><span>标签</span>22</div>
+        <div><span>分类</span>6</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="友人帐">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                友人帐
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/tech.html" title="技术栈">
+            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
+            <div class="mdui-list-item-content">
+                技术栈
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于我">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于我
+            </div>
+        </a>
+        
+    </div>
+    
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:hawcat.cn" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+            </form>
+         
+    </div>
+</div>
+
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/47215249"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/hawcat/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:Yht1128@outlook.com"
+			target="_blank"
+			mdui-tooltip="{content: 'mail'}"
+			style="
+				color: rgb(30, 136, 229);
+				background-color: rgba(30, 136, 229, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://hawcat.com/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Deep-Learning/">Deep-Learning</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Dev/">Dev</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/HardWare/">HardWare</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/NetWorks/">NetWorks</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ops/">Ops</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Tests/">Tests</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/ARM/" style="font-size: 13.33px;">ARM</a> <a href="/tags/Android/" style="font-size: 13.33px;">Android</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/ESP32/" style="font-size: 10px;">ESP32</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/Res/" style="font-size: 10px;">Res</a> <a href="/tags/Routers/" style="font-size: 10px;">Routers</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Software-Tests/" style="font-size: 13.33px;">Software-Tests</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/Yolo/" style="font-size: 10px;">Yolo</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(22);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/14/hello-world/">hawcat的时光轴</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/12/Python/">Python - Python与常用语言的特性与区别</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/12/testface/">软件测试 - 记录一下面试常用知识</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/12/Mysql/">Mysql - 常用CRUD</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/16/yolo/">YOLOv5 - 恢复意外停止的训练</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+   
+    <div class="nexmoe-copyright">
+        &copy; 2023 hawcat
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        <br><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备19027376号</a>
+<br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral">
+<img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a>
+
+    </div>
+</div><!-- .nexmoe-drawer --></div><div id="nexmoe-content"><div class="nexmoe-primary"><div class="nexmoe-post">
+  <article>
+    
+        <div class="nexmoe-post-cover absolute" style="padding-top: 62.5%;"> 
+            <img src="https://cdn.hawcat.cn/articleCover/hawcat11673585351413587" alt="ESP32 - 使用开发板做一个硬件状态监控器！" loading="lazy">
+            <h1>ESP32 - 使用开发板做一个硬件状态监控器！</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2022年04月12日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Dev/">Dev</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <p><em>声明：视频教程请参考<a target="_blank" rel="noopener" href="https://www.bilibili.com/video/BV1jL4y1x7gx">B站UP日出东水</a>，表盘图片版权归原作者所有。这里是参照该UP主写的教程文章，也提供我自己的一些想法。在我着手做的过程中，UP也给予了我许多帮助。</em></p>
+<h2 id="材料清单表"><a href="#材料清单表" class="headerlink" title="材料清单表"></a>材料清单表</h2><h3 id="1-ESP32-WROOM32"><a href="#1-ESP32-WROOM32" class="headerlink" title="1.ESP32 WROOM32"></a>1.ESP32 WROOM32</h3><p>(我是用的S2焊好排针的版本，不过后来装进去的时候除了问题，模具没调。带WIFI功能的这个板子应该都行，详情参照<a target="_blank" rel="noopener" href="https://www.espressif.com/zh-hans/products/socs/esp32">乐鑫ESP32官网</a>)</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584731868" alt="bef94e3114244fbc34efc13dd4a3255c.png" data-caption="bef94e3114244fbc34efc13dd4a3255c.png" loading="lazy"></p>
+<h3 id="2-电压表两个，最大量程3-3V"><a href="#2-电压表两个，最大量程3-3V" class="headerlink" title="2.电压表两个，最大量程3.3V"></a>2.电压表两个，最大量程3.3V</h3><p>(我用的3V UP主是1V推荐91C4)</p>
+<h3 id="3-microUSB数据线一根"><a href="#3-microUSB数据线一根" class="headerlink" title="3.microUSB数据线一根"></a>3.microUSB数据线一根</h3><h3 id="4-杜邦线或者电烙铁"><a href="#4-杜邦线或者电烙铁" class="headerlink" title="4.杜邦线或者电烙铁"></a>4.杜邦线或者电烙铁</h3><p>（因为买的是焊好排针的版本，所以我用的杜邦线，连接电压表时得扒皮把里面的铜芯抽出来）</p>
+<hr>
+<p>这里总价不会超过30元，决心动手自己尝试的小伙伴注意查看各个材料的单价，别买错了。</p>
+<h2 id="客户端代码"><a href="#客户端代码" class="headerlink" title="客户端代码"></a>客户端代码</h2><p>这里采用C#编写，本质上是一个不断输出CPU,RAM占用率的控制台程序，实测我后来用JAVA写也行。</p>
+<figure class="highlight plaintext"><figcaption><span>System;</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br></pre></td><td class="code"><pre><span class="line">using System.Management;</span><br><span class="line">using System.Diagnostics;</span><br><span class="line">using System.Threading;</span><br><span class="line">using System.Net.Sockets;</span><br><span class="line">using System.Text;</span><br><span class="line">using System.Net;</span><br><span class="line"></span><br><span class="line">namespace ConsoleApp1</span><br><span class="line">&#123;</span><br><span class="line">    public class Class1</span><br><span class="line">    &#123;</span><br><span class="line">        static PerformanceCounter cpuCounter;</span><br><span class="line">        static PerformanceCounter ramCounter;</span><br><span class="line">        static double getAllRam;</span><br><span class="line">        static double useVoltage;</span><br><span class="line">        static int updateTime;</span><br><span class="line">        static string esp32Ip;</span><br><span class="line">        static int esp32Port;</span><br><span class="line">        static UdpClient udpClient = new UdpClient();</span><br><span class="line"></span><br><span class="line">        static void Main(string[] args)</span><br><span class="line">        &#123;</span><br><span class="line">            if (args.Length != 4)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.WriteLine(&quot;输入的配置项不正确!\n&quot;);</span><br><span class="line">                Console.WriteLine(&quot;右键CpuRamGet.exe -&gt; 创建快捷方式 -&gt; 快捷方式右键属性 -&gt; 目标 -&gt; CpuRamGet.exe 尾部依照下列说明添加\n&quot;);</span><br><span class="line">                Console.WriteLine(&quot;1.IP  2.端口号  3.电压表最大值(3.3V以内)  4.刷新时间(单位毫秒) 每项中间空格区分\n \n例: 192.168.1.199 2333 1 500&quot;);</span><br><span class="line">                Console.ReadKey();</span><br><span class="line">                return;</span><br><span class="line">            &#125;</span><br><span class="line">                </span><br><span class="line">            esp32Ip = args[0];</span><br><span class="line">            esp32Port = Convert.ToInt32(args[1]);</span><br><span class="line">            useVoltage = (255.0f / 3.30f) * Convert.ToDouble(args[2]);</span><br><span class="line">            updateTime = Convert.ToInt32(args[3]);</span><br><span class="line"></span><br><span class="line">            Init(out cpuCounter, out ramCounter,out getAllRam);</span><br><span class="line">            Thread thread = new Thread(SetEsp32);</span><br><span class="line">            thread.Start();</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        static double RamapValue(double Value, double Low1Val, double High1Val, double Low2Val, double High2Val)</span><br><span class="line">        &#123;</span><br><span class="line">            double re = (Value - Low1Val) * (High2Val - Low2Val) / (High1Val - Low1Val) + Low2Val;</span><br><span class="line">            return re;</span><br><span class="line">        &#125;</span><br><span class="line">        static void SetEsp32()</span><br><span class="line">        &#123;</span><br><span class="line">            while (true)</span><br><span class="line">            &#123;</span><br><span class="line">                Console.Clear();</span><br><span class="line">                double cpuProcessor = Math.Round(cpuCounter.NextValue(), 0);</span><br><span class="line">                double ramMemory = Math.Round((1.0 - (ramCounter.NextValue() / getAllRam)) * 100, 0);</span><br><span class="line">                Console.WriteLine(&quot;CPU使用率：&quot; + cpuProcessor + &quot;%&quot;);</span><br><span class="line">                Console.WriteLine(&quot;总内存:&quot; + getAllRam + &quot; MB&quot;);</span><br><span class="line">                Console.WriteLine(&quot;可使用内存：&quot; + ramCounter.NextValue() + &quot; MB&quot;);</span><br><span class="line">                Console.WriteLine(&quot;占用内存百分比：&quot; + ramMemory + &quot;%&quot;);</span><br><span class="line"></span><br><span class="line">                //dac的数值范围为0-255,实际输出电压值为0-3.3v</span><br><span class="line">                Esp32Connected(Math.Round( RamapValue(ramMemory, 0, 100.0, 0, useVoltage),0) + &quot;,&quot;+ Math.Round(RamapValue(cpuProcessor, 0, 100.0, 0, useVoltage), 0));</span><br><span class="line">                System.Threading.Thread.Sleep(updateTime);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        static void Init(out PerformanceCounter cpuCounter, out PerformanceCounter ramCounter, out double getAllRam)</span><br><span class="line">        &#123;</span><br><span class="line">            //获取Cpu使用率</span><br><span class="line">            cpuCounter = new PerformanceCounter();</span><br><span class="line">            cpuCounter.CategoryName = &quot;Processor&quot;;</span><br><span class="line">            cpuCounter.CounterName = &quot;% Processor Time&quot;;</span><br><span class="line">            cpuCounter.InstanceName = &quot;_Total&quot;;</span><br><span class="line">            cpuCounter = new PerformanceCounter(&quot;Processor&quot;, &quot;% Processor Time&quot;, &quot;_Total&quot;);</span><br><span class="line">            ramCounter = new PerformanceCounter(&quot;Memory&quot;, &quot;Available MBytes&quot;);</span><br><span class="line"></span><br><span class="line">            //获取总物理内存大小</span><br><span class="line">            ManagementClass cimobject1 = new ManagementClass(&quot;Win32_PhysicalMemory&quot;);</span><br><span class="line">            ManagementObjectCollection moc1 = cimobject1.GetInstances();</span><br><span class="line">            double capacity = 0;</span><br><span class="line">            foreach (ManagementObject mo1 in moc1)</span><br><span class="line">            &#123;</span><br><span class="line">                capacity += ((Math.Round(Int64.Parse(mo1.Properties[&quot;Capacity&quot;].Value.ToString()) / 1024 / 1024 / 1024.0, 1)));</span><br><span class="line">            &#125;</span><br><span class="line">            moc1.Dispose();</span><br><span class="line">            cimobject1.Dispose();</span><br><span class="line">            getAllRam = capacity * 1024;</span><br><span class="line">        &#125;</span><br><span class="line"></span><br><span class="line">        static void Esp32Connected(string message)</span><br><span class="line">        &#123;</span><br><span class="line">            //UDP 方式发送信息给开发板</span><br><span class="line">            byte[] buffer = Encoding.UTF8.GetBytes(message);</span><br><span class="line"></span><br><span class="line">            if (udpClient != null)</span><br><span class="line">            &#123;</span><br><span class="line">                IPAddress remoteIp = IPAddress.Parse(esp32Ip);</span><br><span class="line">                IPEndPoint remotePoint = new IPEndPoint(remoteIp, esp32Port);</span><br><span class="line">                udpClient.Send(buffer, buffer.Length, remotePoint);</span><br><span class="line">                Console.WriteLine(&quot;IP:&quot;+esp32Ip + &quot; 端口:&quot;+esp32Port + &quot; 发送信息: &quot; + message);</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584766525" alt="eb305d3965b151bf84b8b5bebc5b4032.png" data-caption="eb305d3965b151bf84b8b5bebc5b4032.png" loading="lazy"></p>
+<p>JAVA版的代码我优化好了会上传到Github上的，jar文件也会上传到网盘。</p>
+<h2 id="ESP开发板刷机"><a href="#ESP开发板刷机" class="headerlink" title="ESP开发板刷机"></a>ESP开发板刷机</h2><p>开发板刷机要用到开发板编程工具,这里UP主用的是Thonny，我用的arduino，两者如果单纯做这个项目的话区别不大，这里以Thonny为烧板工具。 </p>
+<h3 id="1-安装串口驱动"><a href="#1-安装串口驱动" class="headerlink" title="1.安装串口驱动"></a>1.安装串口驱动</h3><p><a target="_blank" rel="noopener" href="https://www.silabs.com/developers/usb-to-uart-bridge-vcp-drivers">串口驱动下载</a> 这是我用的，其他的只要能驱动成功识别就没有问题。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584808208" alt="41cfda0867acbbc8d8095d07045497dc.png" data-caption="41cfda0867acbbc8d8095d07045497dc.png" loading="lazy"></p>
+<p>CP210x Windows Drivers</p>
+<h3 id="2-ESP32烧固件"><a href="#2-ESP32烧固件" class="headerlink" title="2.ESP32烧固件"></a>2.ESP32烧固件</h3><p>Thonny中工具-&gt;设置-&gt;解释器，选择ESP32并点击安装且更新固件（Install or update  firmware）选择端口之后即可选择固件刷写即可，我这里仅提供ESP32 WROOM32 S2的固件，具体的可以在乐鑫官网上去找，不过ESP32固件大多通用。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584850982" alt="7303e0480e5ce087eb5be8e9a114981b.png" data-caption="7303e0480e5ce087eb5be8e9a114981b.png" loading="lazy"><br><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584875984" alt="300290b4268517ad2e56180799a099c0.png" data-caption="300290b4268517ad2e56180799a099c0.png" loading="lazy"></p>
+<h3 id="3-上载代码"><a href="#3-上载代码" class="headerlink" title="3.上载代码"></a>3.上载代码</h3><p>刷完机后就可以上传代码了，让开发板自己跑起来。Thonny是一个代码编辑器，可以在这个上面编写代码然后上载到开发板，这里能识别到microUSB设备后再把代码稍加修改直接拖进去就可以了，此时你的表应该能显示读数（接线正确的话）。反接会烧坏电压表，指针会指向0度以下，需要察觉。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584940026" alt="ad6519cf3f4ef8f6ecf37454bd7b14ea.png" data-caption="ad6519cf3f4ef8f6ecf37454bd7b14ea.png" loading="lazy"><br><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584947681" alt="0aa9b1e3be7b257416a6a0e54a2bbb01.png" data-caption="0aa9b1e3be7b257416a6a0e54a2bbb01.png" loading="lazy"></p>
+<figure class="highlight plaintext"><figcaption><span>machine import I2C, Pin</span></figcaption><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br></pre></td><td class="code"><pre><span class="line">import time</span><br><span class="line">from machine import Pin,DAC</span><br><span class="line">import utime, math</span><br><span class="line">import _thread</span><br><span class="line">import socket</span><br><span class="line">import sys</span><br><span class="line"></span><br><span class="line">def getTime():</span><br><span class="line">    t = time.gmtime()</span><br><span class="line">    timeY = str(t[0]) #年</span><br><span class="line">    timeM = str(t[1]) #月</span><br><span class="line">    timeD = str(t[2]) #日</span><br><span class="line">    timeHour = str(t[3]) #时</span><br><span class="line">    timeMinute = str(t[4]) #分</span><br><span class="line">    timeSecond = str(t[5]) #秒</span><br><span class="line">    return str(timeY+&quot;/&quot;+timeM+&quot;/&quot;+timeD +&quot; &quot;+timeHour+&quot;:&quot;+timeMinute+&quot;:&quot;+timeSecond)</span><br><span class="line"></span><br><span class="line">def do_connect():</span><br><span class="line">    global addressIp</span><br><span class="line">    try:</span><br><span class="line">        import network</span><br><span class="line">        wlan = network.WLAN(network.STA_IF)</span><br><span class="line">        wlan.active(False) #先将Wifi断开,方便模拟断网调试</span><br><span class="line">        wlan.active(True)</span><br><span class="line">        if not wlan.isconnected():</span><br><span class="line">            print(&#x27;connecting to network...&#x27;)</span><br><span class="line">            wlan.connect(&#x27;wifi名称&#x27;, &#x27;密码&#x27;) # 只支持2.4ghz频段</span><br><span class="line">            while not wlan.isconnected():#没有返回True将循环等待</span><br><span class="line">                pass</span><br><span class="line">        print(&#x27;network config:&#x27;, wlan.ifconfig())</span><br><span class="line">        addressIp = str(wlan.ifconfig())</span><br><span class="line">    except:</span><br><span class="line">        pass</span><br><span class="line">    </span><br><span class="line">def lerp(v1,v2,d):</span><br><span class="line">    return v1 * (1 - d) + v2 * d</span><br><span class="line"></span><br><span class="line">def dacThread( threadName, delay):</span><br><span class="line">    global ram_value</span><br><span class="line">    ramlerp = 0</span><br><span class="line">    i = 0.0</span><br><span class="line">    while(True):</span><br><span class="line">        i += 0.01</span><br><span class="line">        ramlerp = lerp(ramlerp,ram_value,i)</span><br><span class="line">        dac25.write(int(ramlerp))</span><br><span class="line">        if(i &gt;= 1.0):</span><br><span class="line">            i = 0.0</span><br><span class="line">        #time.sleep(0.5)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">def dacThread2( threadName, delay):</span><br><span class="line">    global cpu_value</span><br><span class="line">    cpulerp = 0</span><br><span class="line">    i = 0.0</span><br><span class="line">    while(True):</span><br><span class="line">        i += 0.01</span><br><span class="line">        cpulerp = lerp(cpulerp,cpu_value,i)</span><br><span class="line">        dac26.write(int(cpulerp))</span><br><span class="line">        if(i &gt;= 1.0):</span><br><span class="line">            i = 0.0</span><br><span class="line">        #time.sleep(0.5)</span><br><span class="line">        </span><br><span class="line">def dacThread3( threadName, delay):</span><br><span class="line">    global ram_value</span><br><span class="line">    global cpu_value</span><br><span class="line">    while(True):</span><br><span class="line">        try:</span><br><span class="line">            #print(getTime() + &quot; 开始监听...&quot;)</span><br><span class="line">            data,addr=s.recvfrom(32)</span><br><span class="line">            stringKey = data.decode(&quot;utf-8&quot;)</span><br><span class="line">            array_value =  stringKey.split(&quot;,&quot;)</span><br><span class="line">            cpu_value = int(array_value[1])</span><br><span class="line">            ram_value = int(array_value[0])</span><br><span class="line">            #print(getTime()+&quot; 接收信息...&quot;+ stringKey)</span><br><span class="line">            time.sleep(0.1)</span><br><span class="line">        except:</span><br><span class="line">            #print(getTime()+&quot; 连接断开...&quot;)</span><br><span class="line">            time.sleep(0.1)</span><br><span class="line">        </span><br><span class="line">        </span><br><span class="line">cpu_value = 0</span><br><span class="line">ram_value = 0</span><br><span class="line"></span><br><span class="line">#初始化DAC</span><br><span class="line">dac_pin25 = Pin(25, Pin.OUT)</span><br><span class="line">dac_pin26 = Pin(26, Pin.OUT)</span><br><span class="line"></span><br><span class="line">dac25 = DAC(dac_pin25)</span><br><span class="line">dac26 = DAC(dac_pin26)</span><br><span class="line">dac25.write(0)</span><br><span class="line">dac26.write(0)</span><br><span class="line"></span><br><span class="line">#连接Wifi</span><br><span class="line">do_connect()</span><br><span class="line"></span><br><span class="line">#创建socks,监听4999</span><br><span class="line">port = 4999</span><br><span class="line">s = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)</span><br><span class="line"></span><br><span class="line">addressIp = addressIp.replace(&quot;(&quot;,&quot;&quot;)</span><br><span class="line">addressIp = addressIp.replace(&quot;)&quot;,&quot;&quot;)</span><br><span class="line">addressIp = addressIp.replace(&quot;&#x27;&quot;,&quot;&quot;)</span><br><span class="line">addressIp = addressIp.split(&quot;,&quot;)</span><br><span class="line">s.bind((addressIp[0], port))</span><br><span class="line"></span><br><span class="line">_thread.start_new_thread( dacThread, (&quot;Thread_1&quot;, 1, ) )</span><br><span class="line">_thread.start_new_thread( dacThread2, (&quot;Thread_2&quot;, 2, ) )</span><br><span class="line">_thread.start_new_thread( dacThread3, (&quot;Thread_3&quot;, 3, ) )</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<p>该开发板只支持2.4GHZ频段wifi。</p>
+<h3 id="4-获取开发板IP"><a href="#4-获取开发板IP" class="headerlink" title="4.获取开发板IP"></a>4.获取开发板IP</h3><p>这里可以通过路由器后台获取，不过细心的小伙伴可以发现代码中也有获取IP字段，没错，可以通过运行这段代码让开发板自己返回IP地址，子网掩码，以及网关给你。<br><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673584947681" alt="0aa9b1e3be7b257416a6a0e54a2bbb01.png" data-caption="0aa9b1e3be7b257416a6a0e54a2bbb01.png" loading="lazy"><br><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673585011190" alt="b738bb0d2a66953428be7d6ff39c60d1.png" data-caption="b738bb0d2a66953428be7d6ff39c60d1.png" loading="lazy"></p>
+<h3 id="5-客户端输入IP信息"><a href="#5-客户端输入IP信息" class="headerlink" title="5.客户端输入IP信息"></a>5.客户端输入IP信息</h3><p>UP主的采用的是C#快捷方式注入，等我JAVA代码写好了可以支持代码中调试。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673585043313" alt="8b603673747cf08a4f3a26b81855d8aa.png" data-caption="8b603673747cf08a4f3a26b81855d8aa.png" loading="lazy"></p>
+<p>4个参数分别是内网IP地址，端口，最大量程，刷新频率。具体可参考代码。</p>
+<h2 id="接线"><a href="#接线" class="headerlink" title="接线"></a>接线</h2><p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673585106929" alt="8739f15862afb0af3cc5eedb90df4f03.png" data-caption="8739f15862afb0af3cc5eedb90df4f03.png" loading="lazy"></p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673585075234" alt="126a54edb77a2fbc5f2a04f690aa5811.jpg" data-caption="126a54edb77a2fbc5f2a04f690aa5811.jpg" loading="lazy"></p>
+<h2 id="总结以及我个人动手经验"><a href="#总结以及我个人动手经验" class="headerlink" title="总结以及我个人动手经验"></a>总结以及我个人动手经验</h2><p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673585124807" alt="5657e609e0a07d6ed7e1ca63144e41df.jpg" data-caption="5657e609e0a07d6ed7e1ca63144e41df.jpg" loading="lazy"><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/articlePicture/hawcat11673585124838" alt="62616c93618c038e008db6b8ea84dec3.jpg" data-caption="62616c93618c038e008db6b8ea84dec3.jpg" loading="lazy"></p>
+<p>因为是带排针版本的，模具是直接用UP主的，导致装的时候合不上去，还好用到的排针只有三只，我是硬生生地把挡住的排针用钳子夹弯才勉勉强强安装上。其次是杜邦线剥皮太难了，这种细线得非常细致地处理才能不断芯的情况下剥皮。线也很硬，塞进去后我还用胶带缠了一圈，以免滑动。各位选择ESP32的版本要注意，带排针的就得调整3D模型，不带排针的可自定义空间大。<br>3D模型以及各种材料可以在UP主视频下面获取，我后续如果有调整会连JAVA代码一起上传到我的网盘。</p>
+<hr>
+<blockquote>
+<p><em>相关资料汇总:<a target="_blank" rel="noopener" href="https://pan.hawcat.cn/s/80fY">https://pan.hawcat.cn/s/80fY</a><br>(固件，ESP32引脚图等)</em></p>
+</blockquote>
+
+    <p id="hitokoto">
+<a href="#" id="hitokoto_text">:D 获取中...</a>
+</p>
+<script>
+fetch('https://v1.hitokoto.cn')
+  .then(response => response.json())
+  .then(data => {
+    const hitokoto = document.querySelector('#hitokoto_text')
+    hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+    hitokoto.innerText = data.hitokoto
+  })
+  .catch(console.error)
+</script></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>hawcat<br>
+        <strong>本文链接：</strong><a href="https://hawcat.cn/2022/04/12/esp32/" title="https:&#x2F;&#x2F;hawcat.cn&#x2F;2022&#x2F;04&#x2F;12&#x2F;esp32&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;hawcat.cn&#x2F;2022&#x2F;04&#x2F;12&#x2F;esp32&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/ARM/" rel="tag">ARM</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/C/" rel="tag">C#</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/ESP32/" rel="tag">ESP32</a>
+    
+</div>
+  
+  
+    <script async src="/js/copy-codeblock.js?v=1684249852743"></script>
+  
+
+  
+      <div class="nexmoe-post-footer">
+          <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+</head>
+<body>
+  <div id="gitalk-container"></div>
+  <script>
+      const gitalk = new Gitalk({
+        clientID: '2f6d5dc2b9efeda733bb',          // 8d8e96********797026d3
+        clientSecret: '0c54a7dd933ac2d84f9a03058a973c065e5869af',  // secrets**********secrets
+        repo: 'Gittalk',          // blogtalk
+        owner: 'hawcat',   // WeiyiGeek
+        admin: ['hawcat'], // ['WeiyiGeek']
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+      gitalk.render('gitalk-container')
+</script>
+</body>
+
+      </div>
+  
+</div></div><div class="nexmoe-post-right">    <div class="nexmoe-fixed">
+        <div class="nexmoe-tool">
+
+            
+
+            
+            
+            <button class="mdui-fab catalog" style="overflow:unset;">
+                <i class="nexmoefont icon-i-catalog"></i>
+                <div class="nexmoe-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%90%E6%96%99%E6%B8%85%E5%8D%95%E8%A1%A8"><span class="toc-number">1.</span> <span class="toc-text">材料清单表</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-ESP32-WROOM32"><span class="toc-number">1.1.</span> <span class="toc-text">1.ESP32 WROOM32</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-%E7%94%B5%E5%8E%8B%E8%A1%A8%E4%B8%A4%E4%B8%AA%EF%BC%8C%E6%9C%80%E5%A4%A7%E9%87%8F%E7%A8%8B3-3V"><span class="toc-number">1.2.</span> <span class="toc-text">2.电压表两个，最大量程3.3V</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-microUSB%E6%95%B0%E6%8D%AE%E7%BA%BF%E4%B8%80%E6%A0%B9"><span class="toc-number">1.3.</span> <span class="toc-text">3.microUSB数据线一根</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E6%9D%9C%E9%82%A6%E7%BA%BF%E6%88%96%E8%80%85%E7%94%B5%E7%83%99%E9%93%81"><span class="toc-number">1.4.</span> <span class="toc-text">4.杜邦线或者电烙铁</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%A2%E6%88%B7%E7%AB%AF%E4%BB%A3%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">客户端代码</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#ESP%E5%BC%80%E5%8F%91%E6%9D%BF%E5%88%B7%E6%9C%BA"><span class="toc-number">3.</span> <span class="toc-text">ESP开发板刷机</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-%E5%AE%89%E8%A3%85%E4%B8%B2%E5%8F%A3%E9%A9%B1%E5%8A%A8"><span class="toc-number">3.1.</span> <span class="toc-text">1.安装串口驱动</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#2-ESP32%E7%83%A7%E5%9B%BA%E4%BB%B6"><span class="toc-number">3.2.</span> <span class="toc-text">2.ESP32烧固件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#3-%E4%B8%8A%E8%BD%BD%E4%BB%A3%E7%A0%81"><span class="toc-number">3.3.</span> <span class="toc-text">3.上载代码</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#4-%E8%8E%B7%E5%8F%96%E5%BC%80%E5%8F%91%E6%9D%BFIP"><span class="toc-number">3.4.</span> <span class="toc-text">4.获取开发板IP</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#5-%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%BE%93%E5%85%A5IP%E4%BF%A1%E6%81%AF"><span class="toc-number">3.5.</span> <span class="toc-text">5.客户端输入IP信息</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A5%E7%BA%BF"><span class="toc-number">4.</span> <span class="toc-text">接线</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93%E4%BB%A5%E5%8F%8A%E6%88%91%E4%B8%AA%E4%BA%BA%E5%8A%A8%E6%89%8B%E7%BB%8F%E9%AA%8C"><span class="toc-number">5.</span> <span class="toc-text">总结以及我个人动手经验</span></a></li></ol>
+                </div>
+            </button>
+            
+
+            
+
+            <a href="#nexmoe-content" class="backtop toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+        </div>
+    </div>
+</div></div><div id="nexmoe-footer"><!--!--></div><div><div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+</div><div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+</div></body></html>

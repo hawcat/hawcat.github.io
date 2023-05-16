@@ -1,0 +1,578 @@
+<!doctype html>
+<html lang="zh"><head>
+<title>Linux - 一些常用指令备份 - hawcat的时光轴</title>
+<meta charset="UTF-8">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta name="description" content="文件管理 ls -a查看所有包括隐藏文件 pwd 查看当前目录 echo “hello” &gt; test&#x2F;file.txt 将hello写入到test文件夹中的file.txt中 箭头的流向就是数据的流向 （echo会覆盖原内容） cat 查看文件内容 cp -r test（相对路径） &#x2F;tmp（绝对路径） 将test文件夹拷贝到tmp文件夹中（递归） 对文件夹进行操作 r">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Linux - 一些常用指令备份">
+<meta property="og:url" content="https://hawcat.cn/2023/02/19/Linux/index.html">
+<meta property="og:site_name" content="hawcat的时光轴">
+<meta property="og:description" content="文件管理 ls -a查看所有包括隐藏文件 pwd 查看当前目录 echo “hello” &gt; test&#x2F;file.txt 将hello写入到test文件夹中的file.txt中 箭头的流向就是数据的流向 （echo会覆盖原内容） cat 查看文件内容 cp -r test（相对路径） &#x2F;tmp（绝对路径） 将test文件夹拷贝到tmp文件夹中（递归） 对文件夹进行操作 r">
+<meta property="og:locale">
+<meta property="og:image" content="c:\Users\Hawteen\AppData\Roaming\Typora\typora-user-images\image-20230512001005815.png">
+<meta property="article:published_time" content="2023-02-19T05:22:12.000Z">
+<meta property="article:modified_time" content="2023-05-16T15:04:55.353Z">
+<meta property="article:author" content="hawcat">
+<meta property="article:tag" content="Linux">
+<meta property="article:tag" content="Shell">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="c:\Users\Hawteen\AppData\Roaming\Typora\typora-user-images\image-20230512001005815.png">
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684249852786">
+
+<link rel="stylesheet" href="/css/style.css?v=1684249852786">
+
+
+
+
+    
+        <link rel="stylesheet" href="/custom.css?v=1684249852786">
+    
+
+
+
+<script src="/lib/mdui_043tiny/mdui.js" async></script>
+<script src="/lib/fancybox/fancybox.umd.js" async></script>
+<script src="/lib/lax.min.js" async></script>
+
+
+<script async src="/js/app.js?v=1684249852786"></script>
+
+ 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4D4ZJ9G024"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-4D4ZJ9G024");
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head><body class="nexmoe mdui-drawer-body-left"><div id="nexmoe-background"><div class="nexmoe-bg" style="background-image: url(https://cdn.hawcat.cn/EuropeFromISS_ZH-CN0722816540_UHD.jpg)"></div><div class="mdui-appbar mdui-shadow-0"><div class="mdui-toolbar"><a class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: &#039;#drawer&#039;, swipe: true}" title="menu"><i class="mdui-icon nexmoefont icon-menu"></i></a><div class="mdui-toolbar-spacer"></div><a class="mdui-btn mdui-btn-icon" href="/" title="hawcat"><img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat"></a></div></div></div><div id="nexmoe-header"><div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="hawcat">
+            <img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat" alt="hawcat">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>16</div>
+        <div><span>标签</span>22</div>
+        <div><span>分类</span>6</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="友人帐">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                友人帐
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/tech.html" title="技术栈">
+            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
+            <div class="mdui-list-item-content">
+                技术栈
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于我">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于我
+            </div>
+        </a>
+        
+    </div>
+    
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+         
+            <form id="search_form" action_e="https://cn.bing.com/search?q=site:hawcat.cn" onsubmit="return search();">
+                <label><input id="search_value" name="q" type="search" placeholder="搜索"></label>
+            </form>
+         
+    </div>
+</div>
+
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/47215249"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/hawcat/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:Yht1128@outlook.com"
+			target="_blank"
+			mdui-tooltip="{content: 'mail'}"
+			style="
+				color: rgb(30, 136, 229);
+				background-color: rgba(30, 136, 229, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://hawcat.com/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Deep-Learning/">Deep-Learning</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Dev/">Dev</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/HardWare/">HardWare</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/NetWorks/">NetWorks</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ops/">Ops</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Tests/">Tests</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/ARM/" style="font-size: 13.33px;">ARM</a> <a href="/tags/Android/" style="font-size: 13.33px;">Android</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/CV/" style="font-size: 10px;">CV</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/ESP32/" style="font-size: 10px;">ESP32</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Python/" style="font-size: 10px;">Python</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/Res/" style="font-size: 10px;">Res</a> <a href="/tags/Routers/" style="font-size: 10px;">Routers</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Software-Tests/" style="font-size: 13.33px;">Software-Tests</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/Yolo/" style="font-size: 10px;">Yolo</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(22);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">10</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2023/05/14/hello-world/">hawcat的时光轴</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/12/Python/">Python - Python与常用语言的特性与区别</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/12/testface/">软件测试 - 记录一下面试常用知识</a>
+          </li>
+        
+          <li>
+            <a href="/2023/05/12/Mysql/">Mysql - 常用CRUD</a>
+          </li>
+        
+          <li>
+            <a href="/2023/03/16/yolo/">YOLOv5 - 恢复意外停止的训练</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+   
+    <div class="nexmoe-copyright">
+        &copy; 2023 hawcat
+        Powered by <a href="http://hexo.io/" target="_blank">Hexo</a>
+        & <a href="https://github.com/theme-nexmoe/hexo-theme-nexmoe" target="_blank">Nexmoe</a>
+        <br><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备19027376号</a>
+<br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral">
+<img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a>
+
+    </div>
+</div><!-- .nexmoe-drawer --></div><div id="nexmoe-content"><div class="nexmoe-primary"><div class="nexmoe-post">
+  <article>
+    
+        <div class="nexmoe-post-cover absolute" style="padding-top: 62.5%;"> 
+            <img src="https://cdn.hawcat.cn/articleCover/hawcat11676103485935313.png" alt="Linux - 一些常用指令备份" loading="lazy">
+            <h1>Linux - 一些常用指令备份</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2023年02月19日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Ops/">Ops</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <h2 id="文件管理"><a href="#文件管理" class="headerlink" title="文件管理"></a>文件管理</h2><ul>
+<li>ls -a查看所有包括隐藏文件</li>
+<li>pwd 查看当前目录</li>
+<li>echo “hello” &gt; test&#x2F;file.txt 将hello写入到test文件夹中的file.txt中 箭头的流向就是数据的流向 （echo会覆盖原内容）</li>
+<li>cat 查看文件内容</li>
+<li>cp -r test（相对路径） &#x2F;tmp（绝对路径） 将test文件夹拷贝到tmp文件夹中（递归） 对文件夹进行操作</li>
+<li>rm -r test 删除文件夹（递归）</li>
+<li>mv test test_tmp 重命名 test为 test_tmp</li>
+<li>mkdir -p &#x2F;test&#x2F;a 递归创建目录 可用于无父目录的情况下创建子目录 *-p, –parents     no error if existing, make parent directories as needed</li>
+</ul>
+<h2 id="文件查询"><a href="#文件查询" class="headerlink" title="文件查询"></a>文件查询</h2><ul>
+<li>echo $PATH 输入当前系统的环境变量</li>
+<li>which * 输出当前环境变量的路径</li>
+<li>ls -l &#x2F;usr&#x2F;bin&#x2F;rm 查看文件的详细信息</li>
+<li>touch {1..6}.txt 分别创建1.txt 2.txt 3.txt …….6.txt文件</li>
+</ul>
+<h3 id="Find命令操作"><a href="#Find命令操作" class="headerlink" title="Find命令操作"></a>Find命令操作</h3><ul>
+<li>find &#x2F;root -mtime(modification time) &#x2F;-ctime(status time) &#x2F;-atime(access time)</li>
+<li>find &#x2F;root -mtime -1(-1天 1天以内 +1一天之外) -name “*.txt” 查询修改时间一天以内的.txt文件</li>
+<li>find &#x2F;root -type f -name “*.log” 查询文档类型的.log文件</li>
+<li>find &#x2F;root -type f -name “*.log” | xargs rm -rf 将查询的文件转换为行 再进行删除</li>
+<li>find &#x2F;root -type f -name “*.tar.gz” -exec mv {} &#x2F;tmp ; 将查询到的tar.gz文件 使用-exec执行mv命令 ({}指之前查到的所有文件名) 将其移动到&#x2F;tmp路径下 ;为标准结束格式</li>
+</ul>
+<h2 id="权限-用户与组"><a href="#权限-用户与组" class="headerlink" title="权限 用户与组"></a>权限 用户与组</h2><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ll -d /test /test/aa</span></span><br><span class="line">drwxr-xr-x.<span class="number"> 3 </span>root root<span class="number"> 16 </span>Feb<span class="number"> 10 </span>21:27 /test</span><br><span class="line">drwxr-xr-x.<span class="number"> 2 </span>root root <span class="number"> 6 </span>Feb<span class="number"> 10 </span>21:27 /test/aa</span><br></pre></td></tr></table></figure>
+
+<p>共显示了七列信息，从左至右依次为：权限、文件数、归属用户、归属群组、文件大小、创建日期、文件名称<br>d ：第一位表示文件类型<br>　　d 文件夹<br>　　-普通文件<br>　　l 链接<br>　　b 块设备文件<br>　　p 管道文件<br>　　c 字符设备文件<br>　　s 套接口文件<br>　　<br>rwx ：第2-4位表示这个文件的属主拥有的权限。r是读、w是写、x是执行<br>r-x ：第5-7位表示和这个文件属主所在同一个组的用户所具有的权限<br>r-x ：第8-10位表示其他用户所具有的权限</p>
+<p><strong>r &#x3D; 4;w &#x3D; 2;x &#x3D; 1;- &#x3D; 0</strong><br>用户可读可写可执行 &#x3D; 4+2+1&#x3D;7<br>组可读可执行 &#x3D; 4+1&#x3D;5<br>其他用户不可读不可写不可执行 &#x3D; 0</p>
+<ul>
+<li><p>chmod -R  750 &#x2F;test 设定当前目录（包括所有子目录的权限为）750</p>
+</li>
+<li><p>umask 默认为022 创建新目录的权限为777-umask&#x3D;755 创建新文件的权限为666-umask&#x3D;644 重新设定umask值会将其默认权限改变</p>
+</li>
+<li><p>getfacl 查看目标目录权限</p>
+<figure class="highlight elixir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="variable">@localhost</span> ~]<span class="comment"># su hawcat</span></span><br><span class="line">[hawcat<span class="variable">@localhost</span> root]<span class="variable">$ </span>getfacl /test/</span><br><span class="line"><span class="symbol">getfacl:</span> <span class="title class_">Removing</span> leading <span class="string">&#x27;/&#x27;</span> from absolute path names</span><br><span class="line"><span class="comment">#file: test</span></span><br><span class="line"><span class="comment">#owner: root</span></span><br><span class="line"><span class="comment">#group: root</span></span><br><span class="line">user::rwx</span><br><span class="line">group::r-x</span><br><span class="line">other::---</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>setfacl -m u:hawcat:rwx &#x2F;test 设定用户可读可写可执行在目录&#x2F;test中</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]<span class="comment"># ll /usr/bin/vim</span></span><br><span class="line">-rwxr-xr-x.<span class="number"> 1 </span>root root<span class="number"> 2337216 </span>Oct<span class="number"> 13 </span><span class="number"> 2020 </span>/usr/bin/vim</span><br><span class="line"> [root@localhost ~]<span class="comment"># chmod u+s /usr/bin/vim</span></span><br><span class="line"> [root@localhost ~]<span class="comment"># ll /usr/bin/vim</span></span><br><span class="line"> -rwsr-xr-x.<span class="number"> 1 </span>root root<span class="number"> 2337216 </span>Oct<span class="number"> 13 </span><span class="number"> 2020 </span>/usr/bin/vim</span><br></pre></td></tr></table></figure>
+
+</li>
+<li><p>chmod u+s &#x2F;usr&#x2F;bin&#x2F;vim 为vim命令设置suid权限 默认以其宿主的身份执行，可让其他用户也有权限进行vim操作</p>
+</li>
+<li><p>chown hawcat.root &#x2F;test&#x2F;aa 修改test&#x2F;aa的用户宿主的修改</p>
+</li>
+<li><p>lsattr &#x2F;1.txt 隐藏权限查询</p>
+</li>
+<li><p>chattr +a &#x2F;1.txt 增加隐藏权限 a锁 只允许&gt;&gt; 不允许&gt;</p>
+</li>
+<li><p>useradd -u 888 -M -s &#x2F;sbin&#x2F;nologin zs123 添加用户zs123 参数分别为指定用户id为888 不允许创建家目录 指定解释器为&#x2F;sbin&#x2F;nologin</p>
+</li>
+</ul>
+<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root<span class="symbol">@localhost</span> /]<span class="meta"># groupadd -g 1222 aagroup</span></span><br><span class="line">[root<span class="symbol">@localhost</span> /]<span class="meta"># grep aagroup /etc/group</span></span><br><span class="line">aagroup:x:<span class="number">1222</span>:</span><br><span class="line">[root<span class="symbol">@localhost</span> /]<span class="meta"># useradd -g aagroup aa123</span></span><br><span class="line">[root<span class="symbol">@localhost</span> /]<span class="meta"># id aa123</span></span><br><span class="line">uid=<span class="number">1001</span>(aa123) gid=<span class="number">1222</span>(aagroup) groups=<span class="number">1222</span>(aagroup)</span><br><span class="line">[root<span class="symbol">@localhost</span> /]<span class="meta"># echo 123456|passwd --stdin aa123`</span></span><br><span class="line">Changing password <span class="keyword">for</span> user aa123.</span><br><span class="line">passwd: all authentication tokens updated successfully.</span><br></pre></td></tr></table></figure>
+
+<p>创建一个aagroup组赋值ID为1222 在aagroup组下创建新用户aa123 并将其密码以标准输入流的方式设置为123456</p>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]# chage -m <span class="number">7</span> -M <span class="number">30</span> -I <span class="number">3</span> -W <span class="number">7</span> aa123</span><br><span class="line">[root@localhost /]# chage -l aa123`</span><br><span class="line">Last <span class="keyword">password</span> change					: Feb <span class="number">11</span>, <span class="number">2023</span></span><br><span class="line"><span class="keyword">Password</span> expires					: Mar <span class="number">13</span>, <span class="number">2023</span></span><br><span class="line"><span class="keyword">Password</span> inactive					: Mar <span class="number">16</span>, <span class="number">2023</span></span><br><span class="line">Account expires						: never</span><br><span class="line">Minimum number <span class="keyword">of</span> days <span class="keyword">between</span> <span class="keyword">password</span> change		: <span class="number">7</span></span><br><span class="line">Maximum number <span class="keyword">of</span> days <span class="keyword">between</span> <span class="keyword">password</span> change		: <span class="number">30</span></span><br><span class="line">Number <span class="keyword">of</span> days <span class="keyword">of</span> <span class="built_in">warning</span> <span class="keyword">before</span> <span class="keyword">password</span> expires	: <span class="number">7</span></span><br></pre></td></tr></table></figure>
+
+
+<p>修改aa123账户的最短修改密码时间和最大修改密码时间以及密码过期警告时间</p>
+<ul>
+<li>userdel -r zs123删除用户zs123以及其家目录（并未创建）</li>
+<li><strong>su - aa123 -c pwd 以aa123用户执行pwd命令 可用于特定用户的脚本运行</strong></li>
+</ul>
+<h2 id="磁盘"><a href="#磁盘" class="headerlink" title="磁盘"></a>磁盘</h2><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost /]<span class="comment"># lsblk</span></span><br><span class="line">NAME   MAJ:MIN RM  SIZE RO TYPE MOUNTPOINT</span><br><span class="line">sda      8:0   <span class="number"> 0 </span>  30G <span class="number"> 0 </span>disk`</span><br><span class="line">├─sda1   8:1   <span class="number"> 0 </span> 300M <span class="number"> 0 </span>part /boot</span><br><span class="line">├─sda2   8:2   <span class="number"> 0 </span>   2G <span class="number"> 0 </span>part [SWAP]</span><br><span class="line">└─sda3   8:3   <span class="number"> 0 </span>27.7G <span class="number"> 0 </span>part /</span><br><span class="line">sr0     11:0   <span class="number"> 1 </span>1024M <span class="number"> 0 </span>rom</span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>lsblk <em>list block</em>当前磁盘以及所有块设备的信息</li>
+</ul>
+<figure class="highlight autohotkey"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br><span class="line">95</span><br><span class="line">96</span><br><span class="line">97</span><br><span class="line">98</span><br><span class="line">99</span><br><span class="line">100</span><br><span class="line">101</span><br><span class="line">102</span><br><span class="line">103</span><br><span class="line">104</span><br><span class="line">105</span><br><span class="line">106</span><br><span class="line">107</span><br><span class="line">108</span><br><span class="line">109</span><br><span class="line">110</span><br><span class="line">111</span><br><span class="line">112</span><br><span class="line">113</span><br><span class="line">114</span><br><span class="line">115</span><br><span class="line">116</span><br><span class="line">117</span><br><span class="line">118</span><br><span class="line">119</span><br><span class="line">120</span><br><span class="line">121</span><br><span class="line">122</span><br><span class="line">123</span><br><span class="line">124</span><br></pre></td><td class="code"><pre><span class="line">[root@localhost ~]# lsblk</span><br><span class="line"><span class="title">NAME   MAJ:</span>MIN RM  SIZE RO TYPE MOUNTPOINT`</span><br><span class="line"><span class="title">sda      8:</span><span class="number">0</span>    <span class="number">0</span>   <span class="number">30</span>G  <span class="number">0</span> disk` </span><br><span class="line">`├─sda1   <span class="number">8</span>:<span class="number">1</span>    <span class="number">0</span>  <span class="number">300</span>M  <span class="number">0</span> part /boot`</span><br><span class="line">`├─sda2   <span class="number">8</span>:<span class="number">2</span>    <span class="number">0</span>    <span class="number">2</span>G  <span class="number">0</span> part [SWAP]`</span><br><span class="line">`└─sda3   <span class="number">8</span>:<span class="number">3</span>    <span class="number">0</span> <span class="number">27.7</span>G  <span class="number">0</span> part /`</span><br><span class="line">`sr0     <span class="number">11</span>:<span class="number">0</span>    <span class="number">1</span> <span class="number">1024</span>M  <span class="number">0</span> rom  </span><br><span class="line">[root@localhost ~]# fdisk /dev/sr0`</span><br><span class="line">`fdisk: cannot open /dev/sr0: No medium found`</span><br><span class="line">`[root@localhost ~]# fdisk /dev/sda3`</span><br><span class="line">`Welcome to fdisk (util-linux <span class="number">2.23</span>.<span class="number">2</span>).`</span><br><span class="line"></span><br><span class="line">`Changes will remain in memory only, <span class="keyword">until</span> you decide to write them.`</span><br><span class="line">`Be careful before using the write command.`</span><br><span class="line"></span><br><span class="line">`Device does <span class="literal">not</span> contain a recognized partition table`</span><br><span class="line">`Building a <span class="keyword">new</span> DOS disklabel with disk identifier <span class="number">0</span>xa2308ba0.`</span><br><span class="line"></span><br><span class="line">`Command (m for help): m`</span><br><span class="line">`Command action`</span><br><span class="line">   `a   toggle a bootable flag`</span><br><span class="line">   `b   edit bsd disklabel`</span><br><span class="line">   `c   toggle the dos compatibility flag`</span><br><span class="line">   `d   delete a partition`</span><br><span class="line">   `g   create a <span class="keyword">new</span> empty GPT partition table`</span><br><span class="line">   `G   create an IRIX (SGI) partition table`</span><br><span class="line">   `l   list known partition types`</span><br><span class="line">   `m   print this menu`</span><br><span class="line">   `n   add a <span class="keyword">new</span> partition`</span><br><span class="line">   `o   create a <span class="keyword">new</span> empty DOS partition table`</span><br><span class="line">   `p   print the partition table`</span><br><span class="line">   `q   quit without saving changes`</span><br><span class="line">   `s   create a <span class="keyword">new</span> empty Sun disklabel`</span><br><span class="line">   `t   change a partition&#x27;s system id`</span><br><span class="line">   `u   change display/entry units`</span><br><span class="line">   `v   verify the partition table`</span><br><span class="line">   `w   write table to disk <span class="literal">and</span> <span class="keyword">exit</span>`</span><br><span class="line">   `x   extra functionality (experts only)`</span><br><span class="line"></span><br><span class="line">`Command (m for help): n`</span><br><span class="line">`Partition type:`</span><br><span class="line">   `p   primary (<span class="number">0</span> primary, <span class="number">0</span> extended, <span class="number">4</span> free)`</span><br><span class="line">   `e   extended`</span><br><span class="line">`Select (default p):` </span><br><span class="line">`Using default response p`</span><br><span class="line">`Partition number (<span class="number">1</span>-<span class="number">4</span>, default <span class="number">1</span>):` </span><br><span class="line">`First sector (<span class="number">2048</span>-<span class="number">58101759</span>, default <span class="number">2048</span>):` </span><br><span class="line">`Using default value <span class="number">2048</span>`</span><br><span class="line">`Last sector, +sectors <span class="literal">or</span> +size&#123;K,M,G&#125; (<span class="number">2048</span>-<span class="number">58101759</span>, default <span class="number">58101759</span>): <span class="number">500</span>M`</span><br><span class="line">`Value out of range.`</span><br><span class="line">`Last sector, +sectors <span class="literal">or</span> +size&#123;K,M,G&#125; (<span class="number">2048</span>-<span class="number">58101759</span>, default <span class="number">58101759</span>): +<span class="number">500</span>M`</span><br><span class="line">`Partition <span class="number">1</span> of type Linux <span class="literal">and</span> of size <span class="number">500</span> MiB is set`</span><br><span class="line"></span><br><span class="line">`Command (m for help): p`</span><br><span class="line"></span><br><span class="line">`Disk /dev/sda3: <span class="number">29.7</span> GB, <span class="number">29748101120</span> bytes, <span class="number">58101760</span> sectors`</span><br><span class="line">`Units = sectors of <span class="number">1</span> * <span class="number">512</span> = <span class="number">512</span> bytes`</span><br><span class="line">`Sector size (logical/physical): <span class="number">512</span> bytes / <span class="number">512</span> bytes`</span><br><span class="line">`I/O size (minimum/optimal): <span class="number">512</span> bytes / <span class="number">512</span> bytes`</span><br><span class="line">`Disk label type: dos`</span><br><span class="line">`Disk identifier: <span class="number">0</span>xa2308ba0`</span><br><span class="line"></span><br><span class="line">     Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">`/dev/sda3p1            <span class="number">2048</span>     <span class="number">1026047</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux`</span><br><span class="line"></span><br><span class="line">`Command (m for help): n`</span><br><span class="line">`Partition type:`</span><br><span class="line">   `p   primary (<span class="number">1</span> primary, <span class="number">0</span> extended, <span class="number">3</span> free)`</span><br><span class="line">   `e   extended`</span><br><span class="line">`Select (default p): e`</span><br><span class="line">`Partition number (<span class="number">2</span>-<span class="number">4</span>, default <span class="number">2</span>):` </span><br><span class="line">`First sector (<span class="number">1026048</span>-<span class="number">58101759</span>, default <span class="number">1026048</span>):` </span><br><span class="line">`Using default value <span class="number">1026048</span>`</span><br><span class="line">`Last sector, +sectors <span class="literal">or</span> +size&#123;K,M,G&#125; (<span class="number">1026048</span>-<span class="number">58101759</span>, default <span class="number">58101759</span>):` </span><br><span class="line">`Using default value <span class="number">58101759</span>`</span><br><span class="line">`Partition <span class="number">2</span> of type Extended <span class="literal">and</span> of size <span class="number">27.2</span> GiB is set`</span><br><span class="line"></span><br><span class="line">`Command (m for help): p`</span><br><span class="line"></span><br><span class="line">`Disk /dev/sda3: <span class="number">29.7</span> GB, <span class="number">29748101120</span> bytes, <span class="number">58101760</span> sectors`</span><br><span class="line">`Units = sectors of <span class="number">1</span> * <span class="number">512</span> = <span class="number">512</span> bytes`</span><br><span class="line">`Sector size (logical/physical): <span class="number">512</span> bytes / <span class="number">512</span> bytes`</span><br><span class="line">`I/O size (minimum/optimal): <span class="number">512</span> bytes / <span class="number">512</span> bytes`</span><br><span class="line">`Disk label type: dos`</span><br><span class="line">`Disk identifier: <span class="number">0</span>xa2308ba0`</span><br><span class="line"></span><br><span class="line">     Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">`/dev/sda3p1            <span class="number">2048</span>     <span class="number">1026047</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux`</span><br><span class="line">`/dev/sda3p2         <span class="number">1026048</span>    <span class="number">58101759</span>    <span class="number">28537856</span>    <span class="number">5</span>  Extended`</span><br><span class="line"></span><br><span class="line">`Command (m for help): n`</span><br><span class="line">`Partition type:`</span><br><span class="line">   `p   primary (<span class="number">1</span> primary, <span class="number">1</span> extended, <span class="number">2</span> free)`</span><br><span class="line">   `l   logical (numbered from <span class="number">5</span>)`</span><br><span class="line">`Select (default p): l`</span><br><span class="line">`Adding logical partition <span class="number">5</span>`</span><br><span class="line">`First sector (<span class="number">1028096</span>-<span class="number">58101759</span>, default <span class="number">1028096</span>):` </span><br><span class="line">`Using default value <span class="number">1028096</span>`</span><br><span class="line">`Last sector, +sectors <span class="literal">or</span> +size&#123;K,M,G&#125; (<span class="number">1028096</span>-<span class="number">58101759</span>, default <span class="number">58101759</span>): +<span class="number">500</span>M`</span><br><span class="line">`Partition <span class="number">5</span> of type Linux <span class="literal">and</span> of size <span class="number">500</span> MiB is set`</span><br><span class="line"></span><br><span class="line">`Command (m for help): p`</span><br><span class="line"></span><br><span class="line">`Disk /dev/sda3: <span class="number">29.7</span> GB, <span class="number">29748101120</span> bytes, <span class="number">58101760</span> sectors`</span><br><span class="line">`Units = sectors of <span class="number">1</span> * <span class="number">512</span> = <span class="number">512</span> bytes`</span><br><span class="line">`Sector size (logical/physical): <span class="number">512</span> bytes / <span class="number">512</span> bytes`</span><br><span class="line">`I/O size (minimum/optimal): <span class="number">512</span> bytes / <span class="number">512</span> bytes`</span><br><span class="line">`Disk label type: dos`</span><br><span class="line">`Disk identifier: <span class="number">0</span>xa2308ba0`</span><br><span class="line"></span><br><span class="line">     Device Boot      Start         End      Blocks   Id  System</span><br><span class="line">`/dev/sda3p1            <span class="number">2048</span>     <span class="number">1026047</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux`</span><br><span class="line">`/dev/sda3p2         <span class="number">1026048</span>    <span class="number">58101759</span>    <span class="number">28537856</span>    <span class="number">5</span>  Extended`</span><br><span class="line">`/dev/sda3p5         <span class="number">1028096</span>     <span class="number">2052095</span>      <span class="number">512000</span>   <span class="number">83</span>  Linux`</span><br><span class="line"></span><br><span class="line">`Command (m for help): w`</span><br><span class="line">`The partition table has been altered!`</span><br><span class="line"></span><br><span class="line">`Calling ioctl() to re-read partition table.`</span><br><span class="line"></span><br><span class="line">`WARNING: Re-reading the partition table failed with error <span class="number">22</span>: Invalid argument.`</span><br><span class="line">`The kernel still uses the old table. The <span class="keyword">new</span> table will be used at`</span><br><span class="line">`the next reboot <span class="literal">or</span> after you run partprobe(<span class="number">8</span>) <span class="literal">or</span> kpartx(<span class="number">8</span>)`</span><br><span class="line">`Syncing disks.`</span><br></pre></td></tr></table></figure>
+
+
+<p><em>使用fdisk工具给sda3进行分区 第一步是分配500M的主分区，第二部创建剩余空间为扩展分区，第三步分配500M给逻辑分区，拓展分区类似于Windows下的未分配空间，是不可用的，只有经过格式化的分区才能够被linux正常使用</em></p>
+<p><em><strong>但此步骤并无作用 相反还可能有危险，仅仅作为指令练手，因为当前块设备以及经过分区，并且已经挂载在&#x2F;目录。所以在lsblk中并不能查看到块设备sda下sda3的分区</strong></em></p>
+<ul>
+<li>mkfs -t ext4 &#x2F;dev&#x2F;块设备 格式化对应分区为ext4格式</li>
+<li>df -Th 显示当前所有分区以及使用情况</li>
+<li>mount 挂载</li>
+</ul>
+<h2 id="网络"><a href="#网络" class="headerlink" title="网络"></a>网络</h2><ul>
+<li>hostname test.hawcat.cn 修改当前hostname为test.hawcat.cn bash后会将其改为当前hostname的记录值</li>
+<li>hostnamectl set-hostname test.hawcat.cn 修改配置文件使其永久生效</li>
+<li>ip addr 查看网络配置信息</li>
+<li>ip addr show eth0 查看eth0网卡下的配置信息</li>
+<li>ifconfig ens33:1 192.168.24.128&#x2F;24 up 在ens33网卡下新建一个虚拟 IP为192.168.24.128</li>
+<li>ifconfig ens33:1 down 将其关闭</li>
+</ul>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="string">[root@test ~]</span># ip route</span><br><span class="line">default via <span class="number">192</span>.<span class="number">168</span>.<span class="number">26</span>.<span class="number">2</span> dev ens33 proto dhcp metric <span class="number">100</span></span><br><span class="line"><span class="number">192.168.26.0</span>/<span class="number">24</span> dev ens33 proto kernel scope link src <span class="number">192</span>.<span class="number">168</span>.<span class="number">26</span>.<span class="number">129</span> metric <span class="number">100</span></span><br><span class="line"><span class="number">192.168.122.0</span>/<span class="number">24</span> dev virbr0 proto kernel scope link src <span class="number">192</span>.<span class="number">168</span>.<span class="number">122</span>.<span class="number">1</span></span><br></pre></td></tr></table></figure>
+
+
+<ul>
+<li>查看当前网卡的路由信息</li>
+<li><strong>ss -lntup</strong> 查看所有端口对应的服务参数分别表示为处于监听状态 不转化为数字 tdp udp 进程</li>
+<li><strong>ss -lntup|grep 22 &#x2F; netstat -lntup|grep 22</strong> 过滤掉非22端口的服务</li>
+</ul>
+<h2 id="系统监控"><a href="#系统监控" class="headerlink" title="系统监控"></a>系统监控</h2><ul>
+<li><p>ps -ef 显示所有进程</p>
+</li>
+<li><p>ps -ef | grep vim 显示包含vim的进程</p>
+</li>
+<li><p>top 动态监控当前进程信息</p>
+</li>
+<li><p>free -m 查看内存情况 参数m为单位 表示多少兆</p>
+</li>
+<li><p>df -Th 磁盘使用情况 <em>–human-readable  print sizes in human readable format (e.g., 1K 234M 2G)</em> <em>–print-type      print file system type</em></p>
+</li>
+</ul>
+<h2 id="一点Dockerfile知识"><a href="#一点Dockerfile知识" class="headerlink" title="一点Dockerfile知识"></a>一点Dockerfile知识</h2><p>常用指令 FROM,WORKDIR,COPY,RUN,CMD</p>
+<p>FROM archlinux:latest #基于什么镜像<br>WORKDIR &#x2F;app   #Shell语句运行在哪个目录<br>COPY src&#x2F; &#x2F;app 将宿主机中文件拷贝到&#x2F;app下<br>RUN echo 321 &gt;&gt; 1.txt #创建时运行的Shell脚本<br>CMD tail -f 1.txt #阻塞式<br>        cat 1.txt #非阻塞式</p>
+<p>docker build -t test:latest</p>
+<h2 id="守护进程"><a href="#守护进程" class="headerlink" title="守护进程"></a>守护进程</h2><p>Daemon</p>
+<p>systemd：</p>
+<p>systemctl 命令管理各种systemd各种对象</p>
+<p>systemd [command] [unit]</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="C:\Users\Hawteen\AppData\Roaming\Typora\typora-user-images\image-20230512001005815.png" alt="image-20230512001005815" data-caption="image-20230512001005815" loading="lazy"></p>
+<h2 id="Redis"><a href="#Redis" class="headerlink" title="Redis"></a>Redis</h2><p><strong>Redis</strong> 键值存储</p>
+<p>Mysql缓存</p>
+<p>随即删除 惰性删除</p>
+<p>缓存击穿：（热点数据过了有效期）查询不存在的记录，不添加Redis只需要在Mysql中查询一次，但如果添加Redis查询不存在1的记录则需要查询3次 一次查询 一次读缓存，一次请求缓存</p>
+<p>缓存雪崩：（大批数据同时过了有效期）</p>
+<p>持久化方式：快照 追加日志</p>
+
+    <p id="hitokoto">
+<a href="#" id="hitokoto_text">:D 获取中...</a>
+</p>
+<script>
+fetch('https://v1.hitokoto.cn')
+  .then(response => response.json())
+  .then(data => {
+    const hitokoto = document.querySelector('#hitokoto_text')
+    hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+    hitokoto.innerText = data.hitokoto
+  })
+  .catch(console.error)
+</script></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>hawcat<br>
+        <strong>本文链接：</strong><a href="https://hawcat.cn/2023/02/19/Linux/" title="https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;02&#x2F;19&#x2F;Linux&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;02&#x2F;19&#x2F;Linux&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Linux/" rel="tag">Linux</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Shell/" rel="tag">Shell</a>
+    
+</div>
+  
+  
+    <script async src="/js/copy-codeblock.js?v=1684249852738"></script>
+  
+
+  
+      <div class="nexmoe-post-footer">
+          <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+</head>
+<body>
+  <div id="gitalk-container"></div>
+  <script>
+      const gitalk = new Gitalk({
+        clientID: '2f6d5dc2b9efeda733bb',          // 8d8e96********797026d3
+        clientSecret: '0c54a7dd933ac2d84f9a03058a973c065e5869af',  // secrets**********secrets
+        repo: 'Gittalk',          // blogtalk
+        owner: 'hawcat',   // WeiyiGeek
+        admin: ['hawcat'], // ['WeiyiGeek']
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+      gitalk.render('gitalk-container')
+</script>
+</body>
+
+      </div>
+  
+</div></div><div class="nexmoe-post-right">    <div class="nexmoe-fixed">
+        <div class="nexmoe-tool">
+
+            
+
+            
+            
+            <button class="mdui-fab catalog" style="overflow:unset;">
+                <i class="nexmoefont icon-i-catalog"></i>
+                <div class="nexmoe-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E7%AE%A1%E7%90%86"><span class="toc-number">1.</span> <span class="toc-text">文件管理</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E6%9F%A5%E8%AF%A2"><span class="toc-number">2.</span> <span class="toc-text">文件查询</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Find%E5%91%BD%E4%BB%A4%E6%93%8D%E4%BD%9C"><span class="toc-number">2.1.</span> <span class="toc-text">Find命令操作</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9D%83%E9%99%90-%E7%94%A8%E6%88%B7%E4%B8%8E%E7%BB%84"><span class="toc-number">3.</span> <span class="toc-text">权限 用户与组</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%A3%81%E7%9B%98"><span class="toc-number">4.</span> <span class="toc-text">磁盘</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%BD%91%E7%BB%9C"><span class="toc-number">5.</span> <span class="toc-text">网络</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%B3%BB%E7%BB%9F%E7%9B%91%E6%8E%A7"><span class="toc-number">6.</span> <span class="toc-text">系统监控</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%B8%80%E7%82%B9Dockerfile%E7%9F%A5%E8%AF%86"><span class="toc-number">7.</span> <span class="toc-text">一点Dockerfile知识</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AE%88%E6%8A%A4%E8%BF%9B%E7%A8%8B"><span class="toc-number">8.</span> <span class="toc-text">守护进程</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Redis"><span class="toc-number">9.</span> <span class="toc-text">Redis</span></a></li></ol>
+                </div>
+            </button>
+            
+
+            
+
+            <a href="#nexmoe-content" class="backtop toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+        </div>
+    </div>
+</div></div><div id="nexmoe-footer"><!--!--></div><div><div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+</div><div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+</div></body></html>
