@@ -6,17 +6,17 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<meta name="description" content="StudentRecognition 学生行为识别闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~ https:&#x2F;&#x2F;github.com&#x2F;hawcat&#x2F;StudentRecognition推荐大家看看俞刚老师的文章，有很多有趣的工作。https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;85506259参考了很多知网上的优化方向，针对OpenPose方面的话主要是苏超的优化方式，在">
+<meta name="description" content="StudentRecognition 学生行为识别闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~ https:&#x2F;&#x2F;github.com&#x2F;hawcat&#x2F;StudentRecognition推荐大家看看俞刚老师的文章，这是指导老师推荐给我的一篇文章，算是姿态估计的启蒙吧，大家也可以当作综述来看。https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;85506259参考了很多知网上的优">
 <meta property="og:type" content="article">
 <meta property="og:title" content="基于Yolov5和Tf-OpenPose的智能课堂行为识别">
 <meta property="og:url" content="https://hawcat.cn/2023/05/17/final/index.html">
 <meta property="og:site_name" content="hawcat的时光轴">
-<meta property="og:description" content="StudentRecognition 学生行为识别闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~ https:&#x2F;&#x2F;github.com&#x2F;hawcat&#x2F;StudentRecognition推荐大家看看俞刚老师的文章，有很多有趣的工作。https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;85506259参考了很多知网上的优化方向，针对OpenPose方面的话主要是苏超的优化方式，在">
+<meta property="og:description" content="StudentRecognition 学生行为识别闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~ https:&#x2F;&#x2F;github.com&#x2F;hawcat&#x2F;StudentRecognition推荐大家看看俞刚老师的文章，这是指导老师推荐给我的一篇文章，算是姿态估计的启蒙吧，大家也可以当作综述来看。https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;85506259参考了很多知网上的优">
 <meta property="og:locale">
 <meta property="og:image" content="https://cdn.hawcat.cn/%E5%9B%BE%E7%89%871.png">
 <meta property="og:image" content="https://cdn.hawcat.cn/%E5%9B%BE%E7%89%871.png">
 <meta property="article:published_time" content="2023-05-17T05:22:12.000Z">
-<meta property="article:modified_time" content="2023-05-17T15:21:41.725Z">
+<meta property="article:modified_time" content="2023-05-17T15:42:44.733Z">
 <meta property="article:author" content="hawcat">
 <meta property="article:tag" content="Python">
 <meta property="article:tag" content="Pytorch">
@@ -28,15 +28,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684336908683">
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684338174068">
 
-<link rel="stylesheet" href="/css/style.css?v=1684336908683">
+<link rel="stylesheet" href="/css/style.css?v=1684338174068">
 
 
 
 
     
-        <link rel="stylesheet" href="/custom.css?v=1684336908683">
+        <link rel="stylesheet" href="/custom.css?v=1684338174068">
     
 
 
@@ -46,7 +46,7 @@
 <script src="/lib/lax.min.js" async></script>
 
 
-<script async src="/js/app.js?v=1684336908683"></script>
+<script async src="/js/app.js?v=1684338174068"></script>
 
  
 
@@ -127,7 +127,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1684336908684"></script>
+	<script async src="/js/search.js?v=1684338174069"></script>
 
 
 
@@ -362,9 +362,9 @@
 </div>
 
     <h2 id="StudentRecognition-学生行为识别"><a href="#StudentRecognition-学生行为识别" class="headerlink" title="StudentRecognition 学生行为识别"></a>StudentRecognition 学生行为识别</h2><p>闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~</p>
-<p><a target="_blank" rel="noopener" href="https://github.com/hawcat/StudentRecognition">https://github.com/hawcat/StudentRecognition</a><br>推荐大家看看俞刚老师的文章，有很多有趣的工作。<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85506259">https://zhuanlan.zhihu.com/p/85506259</a><br>参考了很多知网上的优化方向，针对OpenPose方面的话主要是苏超的优化方式，在我的项目里面应该很能体现他的论文内容。<br>时间太紧代码写的有点乱，特别是s0的main函数，当初为了实现功能省了太多步骤了，有时间重构一下这一块的代码。大多都是开源大牛的杰作，我的工作仅仅只是把他们升级优化然后整合到一起了而已。</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hawcat/StudentRecognition">https://github.com/hawcat/StudentRecognition</a><br>推荐大家看看俞刚老师的文章，这是指导老师推荐给我的一篇文章，算是姿态估计的启蒙吧，大家也可以当作综述来看。<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85506259">https://zhuanlan.zhihu.com/p/85506259</a><br>参考了很多知网上的优化方向，针对OpenPose方面的话主要是苏超的优化方式，在我的项目里面应该很能体现他的论文内容。<br>时间太紧代码写的有点乱，特别是s0的main函数，当初为了实现功能省了太多步骤了，有时间重构一下这一块的代码。大多都是开源大牛的杰作，我的工作仅仅只是把他们升级优化然后整合到一起了而已。</p>
 <p>项目框架Yolov5 5.0 + tf-OpenPose</p>
-<p>Yolov5需要Pytorch，OpenPose需要tensorflow2.x，请严格按照requirement.txt安装环境，才能利用CUDA进行显卡加速。</p>
+<p>Yolov5需要Pytorch1.9.1，OpenPose需要tensorflow2.4.0，请严格按照requirement.txt安装环境，才能利用CUDA进行显卡加速。</p>
 <p>cudatoolkit&#x3D;&#x3D;11.0.3</p>
 <p>cudnn&#x3D;&#x3D;8.0.5.39</p>
 <p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/%E5%9B%BE%E7%89%871.png" alt="项目架构" data-caption="项目架构" loading="lazy"></p>
@@ -375,7 +375,7 @@
 <p><a target="_blank" rel="noopener" href="https://github.com/mpj1234/yolov5-5.0-simpleUI">https://github.com/mpj1234/yolov5-5.0-simpleUI</a></p>
 <h2 id="StudentRecognition"><a href="#StudentRecognition" class="headerlink" title="StudentRecognition"></a>StudentRecognition</h2><p>The time is too tight and the code is messy, most of it is the masterpiece of open source predecessors, and my job is just to put them together.</p>
 <p>Project framework Yolov5 5.0 + OpenPose</p>
-<p>Yolov5 based on Pytorch, OpenPose based on tensorflow 2.x, please strictly follow the requirements .txt installation environment to use CUDA for graphics card acceleration .</p>
+<p>Yolov5 based on Pytorch1.9.1, OpenPose based on tensorflow 2.4, please strictly follow the requirements .txt installation environment to use CUDA for graphics card acceleration.</p>
 <p>cudatoolkit&#x3D;&#x3D;11.0.3</p>
 <p>cudnn&#x3D;&#x3D;8.0.5.39</p>
 <p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/%E5%9B%BE%E7%89%871.png" alt="项目架构" data-caption="项目架构" loading="lazy"></p>
@@ -423,7 +423,7 @@ fetch('https://v1.hitokoto.cn')
 </div>
   
   
-    <script async src="/js/copy-codeblock.js?v=1684336908644"></script>
+    <script async src="/js/copy-codeblock.js?v=1684338174028"></script>
   
 
   
