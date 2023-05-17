@@ -1,32 +1,41 @@
 <!doctype html>
 <html lang="zh"><head>
-<title>标签：Spring - hawcat的时光轴</title>
+<title>基于Yolov5和Tf-OpenPose的智能课堂行为识别 - hawcat的时光轴</title>
 <meta charset="UTF-8">
 <meta name="keywords" content="">
 <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
 
 <link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
-<meta property="og:type" content="website">
-<meta property="og:title" content="hawcat的时光轴">
-<meta property="og:url" content="https://hawcat.cn/tags/Spring/index.html">
+<meta name="description" content="StudentRecognition 学生行为识别闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~ https:&#x2F;&#x2F;github.com&#x2F;hawcat&#x2F;StudentRecognition推荐大家看看俞刚老师的文章，有很多有趣的工作。https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;85506259参考了很多知网上的优化方向，针对OpenPose方面的话主要是苏超的优化方式，在">
+<meta property="og:type" content="article">
+<meta property="og:title" content="基于Yolov5和Tf-OpenPose的智能课堂行为识别">
+<meta property="og:url" content="https://hawcat.cn/2023/05/17/final/index.html">
 <meta property="og:site_name" content="hawcat的时光轴">
+<meta property="og:description" content="StudentRecognition 学生行为识别闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~ https:&#x2F;&#x2F;github.com&#x2F;hawcat&#x2F;StudentRecognition推荐大家看看俞刚老师的文章，有很多有趣的工作。https:&#x2F;&#x2F;zhuanlan.zhihu.com&#x2F;p&#x2F;85506259参考了很多知网上的优化方向，针对OpenPose方面的话主要是苏超的优化方式，在">
 <meta property="og:locale">
+<meta property="og:image" content="https://cdn.hawcat.cn/%E5%9B%BE%E7%89%871.png">
+<meta property="article:published_time" content="2023-05-17T05:22:12.000Z">
+<meta property="article:modified_time" content="2023-05-17T15:11:34.634Z">
 <meta property="article:author" content="hawcat">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="Pytorch">
+<meta property="article:tag" content="Tensorflow">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://cdn.hawcat.cn/%E5%9B%BE%E7%89%871.png">
 
 <link rel="stylesheet" href="/lib/fancybox/fancybox.css">
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684336308914">
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1684336308807">
 
-<link rel="stylesheet" href="/css/style.css?v=1684336308914">
+<link rel="stylesheet" href="/css/style.css?v=1684336308807">
 
 
 
 
     
-        <link rel="stylesheet" href="/custom.css?v=1684336308914">
+        <link rel="stylesheet" href="/custom.css?v=1684336308807">
     
 
 
@@ -36,7 +45,7 @@
 <script src="/lib/lax.min.js" async></script>
 
 
-<script async src="/js/app.js?v=1684336308914"></script>
+<script async src="/js/app.js?v=1684336308807"></script>
 
  
 
@@ -117,7 +126,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1684336308914"></script>
+	<script async src="/js/search.js?v=1684336308808"></script>
 
 
 
@@ -327,22 +336,20 @@
 <img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a>
 
     </div>
-</div><!-- .nexmoe-drawer --></div><div id="nexmoe-content"><div class="nexmoe-primary"><section class="nexmoe-posts">
-    <div class="nexmoe-post">
-        <a href="/2023/02/10/Spring3/">
-            
-                <div class="nexmoe-post-cover mdui-ripple absolute" style="padding-top: 62.5%;"> 
-                    <img src="https://cdn.hawcat.cn/articleCover/hawcat1167602659916914.png" alt="Springboot - 文件上传、工具、异常处理" loading="lazy">
-                    <h1>Springboot - 文件上传、工具、异常处理</h1>
-                </div>
-            
-        </a>
-
-        <div class="nexmoe-post-meta">
+</div><!-- .nexmoe-drawer --></div><div id="nexmoe-content"><div class="nexmoe-primary"><div class="nexmoe-post">
+  <article>
+    
+        <div class="nexmoe-post-cover absolute" style="padding-top: 62.5%;"> 
+            <img src="https://pic3.zhimg.com/80/v2-f1bcb685269912c3d63592d855693c12_720w.webp" alt="基于Yolov5和Tf-OpenPose的智能课堂行为识别" loading="lazy">
+            <h1>基于Yolov5和Tf-OpenPose的智能课堂行为识别</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
     <div class="nexmoe-rainbow">
-        <a class="nexmoefont icon-calendar-fill">2023年02月10日</a>
+        <a class="nexmoefont icon-calendar-fill">2023年05月17日</a>
         
-            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Dev/">Dev</a>
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Deep-Learning/">Deep-Learning</a>
         
         
     </div>
@@ -353,76 +360,97 @@
     
 </div>
 
-        <article>
-            
-        </article>
+    <h2 id="StudentRecognition-学生行为识别"><a href="#StudentRecognition-学生行为识别" class="headerlink" title="StudentRecognition 学生行为识别"></a>StudentRecognition 学生行为识别</h2><p>闲暇之余把毕设开源了，真的很水，各位不要对这个项目要求太高~</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/hawcat/StudentRecognition">https://github.com/hawcat/StudentRecognition</a><br>推荐大家看看俞刚老师的文章，有很多有趣的工作。<br><a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/85506259">https://zhuanlan.zhihu.com/p/85506259</a><br>参考了很多知网上的优化方向，针对OpenPose方面的话主要是苏超的优化方式，在我的项目里面应该很能体现他的论文内容。<br>时间太紧代码写的有点乱，特别是s0的main函数，当初为了实现功能省了太多步骤了，有时间重构一下这一块的代码。大多都是开源大牛的杰作，我的工作仅仅只是把他们升级优化然后整合到一起了而已。</p>
+<p>项目框架Yolov5 5.0 + tf-OpenPose</p>
+<p>Yolov5需要Pytorch，OpenPose需要tensorflow2.x，请严格按照requirement.txt安装环境，才能利用CUDA进行显卡加速。</p>
+<p>cudatoolkit&#x3D;&#x3D;11.0.3</p>
+<p>cudnn&#x3D;&#x3D;8.0.5.39</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://cdn.hawcat.cn/%E5%9B%BE%E7%89%871.png" alt="项目架构" data-caption="项目架构" loading="lazy"></p>
+<p>OpenPose的网络在src的Pose文件夹里面，Github上面上传不了，默认是VGG19，各位可以自行替换优化好的文件，我这里可以提供Mobile-net的网络文件。</p>
+<p>Yolo的模型是我训练好的检测手机模型，可以自行替换为你自己的模型。</p>
+<p>感谢</p>
+<p><a target="_blank" rel="noopener" href="https://github.com/Zumbalamambo/tf-openpose">https://github.com/Zumbalamambo/tf-openpose</a></p>
+<p><a target="_blank" rel="noopener" href="https://github.com/mpj1234/yolov5-5.0-simpleUI">https://github.com/mpj1234/yolov5-5.0-simpleUI</a></p>
+
+    <p id="hitokoto">
+<a href="#" id="hitokoto_text">:D 获取中...</a>
+</p>
+<script>
+fetch('https://v1.hitokoto.cn')
+  .then(response => response.json())
+  .then(data => {
+    const hitokoto = document.querySelector('#hitokoto_text')
+    hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+    hitokoto.innerText = data.hitokoto
+  })
+  .catch(console.error)
+</script></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>hawcat<br>
+        <strong>本文链接：</strong><a href="https://hawcat.cn/2023/05/17/final/" title="https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;05&#x2F;17&#x2F;final&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;05&#x2F;17&#x2F;final&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+        
     </div>
 
-    <div class="nexmoe-post">
-        <a href="/2023/01/22/Spring2/">
-            
-                <div class="nexmoe-post-cover mdui-ripple absolute" style="padding-top: 62.5%;"> 
-                    <img src="https://cdn.hawcat.cn/articleCover/hawcat11673683017964166.png" alt="Springboot - 文件上传和拦截器" loading="lazy">
-                    <h1>Springboot - 文件上传和拦截器</h1>
-                </div>
-            
-        </a>
 
-        <div class="nexmoe-post-meta">
-    <div class="nexmoe-rainbow">
-        <a class="nexmoefont icon-calendar-fill">2023年01月22日</a>
-        
-            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Dev/">Dev</a>
-        
-        
-    </div>
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
     
-    
-    
-    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Python/" rel="tag">Python</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Pytorch/" rel="tag">Pytorch</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Tensorflow/" rel="tag">Tensorflow</a>
     
 </div>
+  
+  
+    <script async src="/js/copy-codeblock.js?v=1684336308770"></script>
+  
 
-        <article>
-            
-        </article>
-    </div>
+  
+      <div class="nexmoe-post-footer">
+          <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+</head>
+<body>
+  <div id="gitalk-container"></div>
+  <script>
+      const gitalk = new Gitalk({
+        clientID: '2f6d5dc2b9efeda733bb',          // 8d8e96********797026d3
+        clientSecret: '0c54a7dd933ac2d84f9a03058a973c065e5869af',  // secrets**********secrets
+        repo: 'Gittalk',          // blogtalk
+        owner: 'hawcat',   // WeiyiGeek
+        admin: ['hawcat'], // ['WeiyiGeek']
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+      gitalk.render('gitalk-container')
+</script>
+</body>
 
-    <div class="nexmoe-post">
-        <a href="/2023/01/14/Spring1/">
-            
-                <div class="nexmoe-post-cover mdui-ripple absolute" style="padding-top: 62.5%;"> 
-                    <img src="https://cdn.hawcat.cn/articleCover/hawcat11673682213591979.png" alt="Springboot - Controller学习" loading="lazy">
-                    <h1>Springboot - Controller学习</h1>
-                </div>
-            
-        </a>
-
-        <div class="nexmoe-post-meta">
-    <div class="nexmoe-rainbow">
-        <a class="nexmoefont icon-calendar-fill">2023年01月14日</a>
-        
-            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Dev/">Dev</a>
-        
-        
-    </div>
-    
-    
-    
-    
-    
-</div>
-
-        <article>
-            
-        </article>
-    </div>
-</section> </div><div class="nexmoe-post-right">    <div class="nexmoe-fixed">
+      </div>
+  
+</div></div><div class="nexmoe-post-right">    <div class="nexmoe-fixed">
         <div class="nexmoe-tool">
 
             
 
             
+            
+            <button class="mdui-fab catalog" style="overflow:unset;">
+                <i class="nexmoefont icon-i-catalog"></i>
+                <div class="nexmoe-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#StudentRecognition-%E5%AD%A6%E7%94%9F%E8%A1%8C%E4%B8%BA%E8%AF%86%E5%88%AB"><span class="toc-number">1.</span> <span class="toc-text">StudentRecognition 学生行为识别</span></a></li></ol>
+                </div>
+            </button>
             
 
             
