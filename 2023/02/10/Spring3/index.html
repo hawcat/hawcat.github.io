@@ -1,0 +1,492 @@
+<!doctype html>
+<html lang="zh"><head>
+<title>Springboot - 文件上传、工具、异常处理 - hawcat的时光轴</title>
+<meta charset="UTF-8">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta name="description" content="文件上传Controller12345678910111213141516@PostMapping(&quot;upload&quot;)@ResponseBodypublic Result upload(@RequestParam MultipartFile file) throws BizException&amp;#123;    &#x2F;&#x2F;文件名    final String filename &#x3D; f">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Springboot - 文件上传、工具、异常处理">
+<meta property="og:url" content="https://hawcat.cn/2023/02/10/Spring3/index.html">
+<meta property="og:site_name" content="hawcat的时光轴">
+<meta property="og:description" content="文件上传Controller12345678910111213141516@PostMapping(&quot;upload&quot;)@ResponseBodypublic Result upload(@RequestParam MultipartFile file) throws BizException&amp;#123;    &#x2F;&#x2F;文件名    final String filename &#x3D; f">
+<meta property="og:locale">
+<meta property="article:published_time" content="2023-02-10T08:21:12.000Z">
+<meta property="article:modified_time" content="2023-05-16T14:47:44.816Z">
+<meta property="article:author" content="hawcat">
+<meta property="article:tag" content="Java">
+<meta property="article:tag" content="Spring">
+<meta name="twitter:card" content="summary">
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1705577186418">
+
+<link rel="stylesheet" href="/css/style.css?v=1705577186418">
+
+
+
+
+    
+        <link rel="stylesheet" href="/custom.css?v=1705577186418">
+    
+
+
+
+<script src="/lib/mdui_043tiny/mdui.js" async></script>
+<script src="/lib/fancybox/fancybox.umd.js" async></script>
+<script src="/lib/lax.min.js" async></script>
+
+
+<script async src="/js/app.js?v=1705577186418"></script>
+
+ 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4D4ZJ9G024"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-4D4ZJ9G024");
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head><body class="nexmoe mdui-drawer-body-left"><div id="nexmoe-background"><div class="nexmoe-bg" style="background-image: url(https://cdn.hawcat.cn/EuropeFromISS_ZH-CN0722816540_UHD.jpg)"></div><div class="mdui-appbar mdui-shadow-0"><div class="mdui-toolbar"><a class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: &#039;#drawer&#039;, swipe: true}" title="menu"><i class="mdui-icon nexmoefont icon-menu"></i></a><div class="mdui-toolbar-spacer"></div><a class="mdui-btn mdui-btn-icon" href="/" title="hawcat"><img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat"></a></div></div></div><div id="nexmoe-header"><div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="hawcat">
+            <img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat" alt="hawcat">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>23</div>
+        <div><span>标签</span>29</div>
+        <div><span>分类</span>9</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="友人帐">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                友人帐
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/tech.html" title="技术栈">
+            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
+            <div class="mdui-list-item-content">
+                技术栈
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于我">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于我
+            </div>
+        </a>
+        
+    </div>
+    
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1705577186419"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/47215249"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/hawcat/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:Yht1128@outlook.com"
+			target="_blank"
+			mdui-tooltip="{content: 'mail'}"
+			style="
+				color: rgb(30, 136, 229);
+				background-color: rgba(30, 136, 229, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://hawcat.com/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/AI/">AI</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Deep-Learning/">Deep-Learning</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Dev/">Dev</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/HardWare/">HardWare</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/NetWorks/">NetWorks</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ops/">Ops</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Python/">Python</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Tests/">Tests</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Travels/">Travels</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/ARM/" style="font-size: 13.33px;">ARM</a> <a href="/tags/Android/" style="font-size: 13.33px;">Android</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/CV/" style="font-size: 13.33px;">CV</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/ESP32/" style="font-size: 10px;">ESP32</a> <a href="/tags/GuangZhou/" style="font-size: 10px;">GuangZhou</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/LLM/" style="font-size: 13.33px;">LLM</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/NLP/" style="font-size: 10px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/Paper/" style="font-size: 13.33px;">Paper</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/Res/" style="font-size: 10px;">Res</a> <a href="/tags/Routers/" style="font-size: 10px;">Routers</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Software-Tests/" style="font-size: 13.33px;">Software-Tests</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/Tensorflow/" style="font-size: 10px;">Tensorflow</a> <a href="/tags/Yolo/" style="font-size: 10px;">Yolo</a> <a href="/tags/env/" style="font-size: 10px;">env</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(29);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/01/17/anaconda/">为什么推荐别人使用Anaconda等虚拟环境，我自己却不用</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/01/finetune/">微调大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/19/transformer/">transformer/力大砖飞</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/11/e4s/">e4s Windows复现部署教程</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/16/llama2/">llama2-13b中文语言对话模型部署</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+   
+    <div class="nexmoe-copyright">
+        &copy; 2024 hawcat
+        Theme by <a href="https://nexmoe.com/" target="_blank">Nexmoe</a>
+        Secondary-development <a href="https://hawcat.cn" target="_blank">hawcat</a>
+        <br><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备19027376号</a>
+<br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral">
+<img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a>
+
+    </div>
+</div><!-- .nexmoe-drawer --></div><div id="nexmoe-content"><div class="nexmoe-primary"><div class="nexmoe-post">
+  <article>
+    
+        <div class="nexmoe-post-cover absolute" style="padding-top: 62.5%;"> 
+            <img src="https://cdn.hawcat.cn/articleCover/hawcat1167602659916914.png" alt="Springboot - 文件上传、工具、异常处理" loading="lazy">
+            <h1>Springboot - 文件上传、工具、异常处理</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2023年02月10日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Dev/">Dev</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <h2 id="文件上传Controller"><a href="#文件上传Controller" class="headerlink" title="文件上传Controller"></a>文件上传Controller</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line"><span class="meta">@PostMapping(&quot;upload&quot;)</span></span><br><span class="line"><span class="meta">@ResponseBody</span></span><br><span class="line"><span class="keyword">public</span> Result <span class="title function_">upload</span><span class="params">(<span class="meta">@RequestParam</span> MultipartFile file)</span> <span class="keyword">throws</span> BizException&#123;</span><br><span class="line">    <span class="comment">//文件名</span></span><br><span class="line">    <span class="keyword">final</span> <span class="type">String</span> <span class="variable">filename</span> <span class="operator">=</span> file.getOriginalFilename();</span><br><span class="line">    <span class="comment">//保存</span></span><br><span class="line">    <span class="keyword">try</span> &#123;</span><br><span class="line">        file.transferTo(<span class="keyword">new</span> <span class="title class_">File</span>(<span class="string">&quot;本地或者网络路径&quot;</span>,filename));</span><br><span class="line">    &#125; <span class="keyword">catch</span> (IOException e) &#123;</span><br><span class="line">        <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(<span class="string">&quot;文件上传失败&quot;</span>,e);</span><br><span class="line">    &#125;</span><br><span class="line">    <span class="comment">//C:/Users/yht11/Desktop/upload ==&gt;127.0.0.1/head 目录地址映射</span></span><br><span class="line">    <span class="keyword">return</span> Result.success(<span class="string">&quot;文件上传成功&quot;</span>, <span class="string">&quot;/head/&quot;</span> + filename);</span><br><span class="line"></span><br><span class="line">&#125;  </span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="Mybatis-Plus代码快速生成工具"><a href="#Mybatis-Plus代码快速生成工具" class="headerlink" title="Mybatis-Plus代码快速生成工具"></a>Mybatis-Plus代码快速生成工具</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">CodeUtil</span> &#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">main</span><span class="params">(String[] args)</span>&#123;</span><br><span class="line">        FastAutoGenerator.create(<span class="string">&quot;jdbc:mysql:///vote&quot;</span>, <span class="string">&quot;root&quot;</span>, <span class="string">&quot;**&quot;</span>)</span><br><span class="line">                .globalConfig(builder -&gt; &#123;</span><br><span class="line">                    builder.author(<span class="string">&quot;hawcat&quot;</span>) <span class="comment">// 设置作者</span></span><br><span class="line">                            <span class="comment">//.enableSwagger() // 开启 swagger 模式</span></span><br><span class="line">                            .fileOverride() <span class="comment">// 覆盖已生成文件</span></span><br><span class="line">                            .outputDir(<span class="string">&quot;路径&quot;</span>); <span class="comment">// 指定输出目录</span></span><br><span class="line">                &#125;)</span><br><span class="line">                .packageConfig(builder -&gt; &#123;</span><br><span class="line">                    builder.parent(<span class="string">&quot;cn.hawcat&quot;</span>) <span class="comment">// 设置父包名</span></span><br><span class="line">                            .moduleName(<span class="string">&quot;模块名&quot;</span>) <span class="comment">// 设置父包模块名</span></span><br><span class="line">                            .pathInfo(Collections.singletonMap(OutputFile.mapperXml, <span class="string">&quot;路径&quot;</span>)); <span class="comment">// 设置mapperXml生成路径</span></span><br><span class="line">                &#125;)</span><br><span class="line">                .strategyConfig(builder -&gt; &#123;</span><br><span class="line">                    builder<span class="comment">//.addInclude(&quot;t_simple&quot;) // 设置需要生成的表名</span></span><br><span class="line">                            .addTablePrefix(<span class="string">&quot;tp_&quot;</span>); <span class="comment">// 设置过滤表前缀</span></span><br><span class="line">                &#125;)</span><br><span class="line">                <span class="comment">//.templateEngine(new FreemarkerTemplateEngine()) // 使用Freemarker引擎模板，默认的是Velocity引擎模板</span></span><br><span class="line">                .execute();</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">    &#125;</span><br></pre></td></tr></table></figure>
+
+<h2 id="常用异常类"><a href="#常用异常类" class="headerlink" title="常用异常类"></a>常用异常类</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">Utils</span> &#123;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断空对象，空字符串，空集合方法</span></span><br><span class="line">    <span class="keyword">public</span>  <span class="keyword">static</span> <span class="type">boolean</span> <span class="title function_">isEmpty</span><span class="params">(Object obj)</span>&#123;</span><br><span class="line">        <span class="keyword">if</span>(obj == <span class="literal">null</span>)&#123;</span><br><span class="line">            <span class="keyword">return</span> <span class="literal">true</span>;</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> String)&#123;</span><br><span class="line">            <span class="type">String</span> <span class="variable">s</span> <span class="operator">=</span> (String) obj;</span><br><span class="line">            <span class="keyword">return</span> s.trim().isEmpty();</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> Collection)&#123;</span><br><span class="line">            <span class="type">Collection</span> <span class="variable">c</span> <span class="operator">=</span> (Collection) obj;</span><br><span class="line">            <span class="keyword">return</span> c.isEmpty();</span><br><span class="line"></span><br><span class="line">        &#125;<span class="keyword">else</span> <span class="keyword">if</span>(obj <span class="keyword">instanceof</span> Map)&#123;</span><br><span class="line">            <span class="type">Map</span> <span class="variable">c</span> <span class="operator">=</span> (Map) obj;</span><br><span class="line">            <span class="keyword">return</span> c.isEmpty();</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> <span class="literal">false</span>;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//用户检查bool值是否为true,如果是true则抛出异常</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">check</span><span class="params">(<span class="type">boolean</span> bool,String msg)</span> <span class="keyword">throws</span> BizException&#123;</span><br><span class="line">        <span class="keyword">if</span>(bool)&#123;</span><br><span class="line">            <span class="keyword">throw</span> <span class="keyword">new</span> <span class="title class_">BizException</span>(msg);</span><br><span class="line">        &#125;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="comment">//判断obj是否为空，如果是空 则抛出异常</span></span><br><span class="line">    <span class="keyword">public</span> <span class="keyword">static</span> <span class="keyword">void</span> <span class="title function_">checkEmpty</span><span class="params">(Object obj,String msg)</span> <span class="keyword">throws</span>  BizException&#123;</span><br><span class="line">        check(isEmpty(obj),msg);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="自定义业务异常"><a href="#自定义业务异常" class="headerlink" title="自定义业务异常"></a>自定义业务异常</h2><figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment">//自定义业务异常</span></span><br><span class="line"><span class="keyword">public</span> <span class="keyword">class</span> <span class="title class_">BizException</span> <span class="keyword">extends</span> <span class="title class_">Exception</span>&#123;</span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BizException</span><span class="params">()</span> &#123;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BizException</span><span class="params">(String message)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(message);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BizException</span><span class="params">(String message, Throwable cause)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(message, cause);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BizException</span><span class="params">(Throwable cause)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(cause);</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="keyword">public</span> <span class="title function_">BizException</span><span class="params">(String message, Throwable cause, <span class="type">boolean</span> enableSuppression, <span class="type">boolean</span> writableStackTrace)</span> &#123;</span><br><span class="line">        <span class="built_in">super</span>(message, cause, enableSuppression, writableStackTrace);</span><br><span class="line">    &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<p>自我学习记录用，可能代码有不规范的地方。</p>
+
+    <p id="hitokoto">
+<a href="#" id="hitokoto_text">:D 获取中...</a>
+</p>
+<script>
+fetch('https://v1.hitokoto.cn')
+  .then(response => response.json())
+  .then(data => {
+    const hitokoto = document.querySelector('#hitokoto_text')
+    hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+    hitokoto.innerText = data.hitokoto
+  })
+  .catch(console.error)
+</script></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>hawcat<br>
+        <strong>本文链接：</strong><a href="https://hawcat.cn/2023/02/10/Spring3/" title="https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;02&#x2F;10&#x2F;Spring3&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;02&#x2F;10&#x2F;Spring3&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Java/" rel="tag">Java</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Spring/" rel="tag">Spring</a>
+    
+</div>
+  
+  
+    <script async src="/js/copy-codeblock.js?v=1705577186376"></script>
+  
+
+  
+      <div class="nexmoe-post-footer">
+          <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+</head>
+<body>
+  <div id="gitalk-container"></div>
+  <script>
+      const gitalk = new Gitalk({
+        clientID: '2f6d5dc2b9efeda733bb',          // 8d8e96********797026d3
+        clientSecret: '0c54a7dd933ac2d84f9a03058a973c065e5869af',  // secrets**********secrets
+        repo: 'Gittalk',          // blogtalk
+        owner: 'hawcat',   // WeiyiGeek
+        admin: ['hawcat'], // ['WeiyiGeek']
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+      gitalk.render('gitalk-container')
+</script>
+</body>
+
+      </div>
+  
+</div></div><div class="nexmoe-post-right">    <div class="nexmoe-fixed">
+        <div class="nexmoe-tool">
+
+            
+
+            
+            
+            <button class="mdui-fab catalog" style="overflow:unset;">
+                <i class="nexmoefont icon-i-catalog"></i>
+                <div class="nexmoe-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%87%E4%BB%B6%E4%B8%8A%E4%BC%A0Controller"><span class="toc-number">1.</span> <span class="toc-text">文件上传Controller</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Mybatis-Plus%E4%BB%A3%E7%A0%81%E5%BF%AB%E9%80%9F%E7%94%9F%E6%88%90%E5%B7%A5%E5%85%B7"><span class="toc-number">2.</span> <span class="toc-text">Mybatis-Plus代码快速生成工具</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%BC%82%E5%B8%B8%E7%B1%BB"><span class="toc-number">3.</span> <span class="toc-text">常用异常类</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E4%B8%9A%E5%8A%A1%E5%BC%82%E5%B8%B8"><span class="toc-number">4.</span> <span class="toc-text">自定义业务异常</span></a></li></ol>
+                </div>
+            </button>
+            
+
+            
+
+            <a href="#nexmoe-content" class="backtop toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+        </div>
+    </div>
+</div></div><div id="nexmoe-footer"><!--!--></div><div><div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+</div><div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+</div></body></html>

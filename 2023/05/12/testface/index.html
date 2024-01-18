@@ -1,0 +1,560 @@
+<!doctype html>
+<html lang="zh"><head>
+<title>软件测试 - 记录一下面试常用知识 - hawcat的时光轴</title>
+<meta charset="UTF-8">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta name="description" content="黑盒测试:黑盒测试也称功能测试或数据驱动测试，它是在已知产品所应具有的功能，通过测试来检测每个功能是否都能正常使用，在测试时，把程序看作一个不能打开的黑盆子，在完全不考虑程序内部结构和内部特性的情况下，测试者在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数锯而产生正确的输出信息，并且保持外部信息（如数据库或文件）的完整性。 “黑盒”法着眼于程序外">
+<meta property="og:type" content="article">
+<meta property="og:title" content="软件测试 - 记录一下面试常用知识">
+<meta property="og:url" content="https://hawcat.cn/2023/05/12/testface/index.html">
+<meta property="og:site_name" content="hawcat的时光轴">
+<meta property="og:description" content="黑盒测试:黑盒测试也称功能测试或数据驱动测试，它是在已知产品所应具有的功能，通过测试来检测每个功能是否都能正常使用，在测试时，把程序看作一个不能打开的黑盆子，在完全不考虑程序内部结构和内部特性的情况下，测试者在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数锯而产生正确的输出信息，并且保持外部信息（如数据库或文件）的完整性。 “黑盒”法着眼于程序外">
+<meta property="og:locale">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/114bd9b53c554319ae0db15b57b472b8.gif#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/0c17d72769aa4bd2b95bbaee1749b39d.gif#pic_center">
+<meta property="og:image" content="https://img-blog.csdnimg.cn/20201028140048366.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3eTAzMjQ=,size_16,color_FFFFFF,t_70#pic_center">
+<meta property="article:published_time" content="2023-05-12T08:21:12.000Z">
+<meta property="article:modified_time" content="2023-05-16T15:03:42.719Z">
+<meta property="article:author" content="hawcat">
+<meta property="article:tag" content="Software-Tests">
+<meta property="article:tag" content="TCP&#x2F;IP">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://img-blog.csdnimg.cn/114bd9b53c554319ae0db15b57b472b8.gif#pic_center">
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1705577186410">
+
+<link rel="stylesheet" href="/css/style.css?v=1705577186410">
+
+
+
+
+    
+        <link rel="stylesheet" href="/custom.css?v=1705577186410">
+    
+
+
+
+<script src="/lib/mdui_043tiny/mdui.js" async></script>
+<script src="/lib/fancybox/fancybox.umd.js" async></script>
+<script src="/lib/lax.min.js" async></script>
+
+
+<script async src="/js/app.js?v=1705577186410"></script>
+
+ 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4D4ZJ9G024"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-4D4ZJ9G024");
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head><body class="nexmoe mdui-drawer-body-left"><div id="nexmoe-background"><div class="nexmoe-bg" style="background-image: url(https://cdn.hawcat.cn/EuropeFromISS_ZH-CN0722816540_UHD.jpg)"></div><div class="mdui-appbar mdui-shadow-0"><div class="mdui-toolbar"><a class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: &#039;#drawer&#039;, swipe: true}" title="menu"><i class="mdui-icon nexmoefont icon-menu"></i></a><div class="mdui-toolbar-spacer"></div><a class="mdui-btn mdui-btn-icon" href="/" title="hawcat"><img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat"></a></div></div></div><div id="nexmoe-header"><div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="hawcat">
+            <img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat" alt="hawcat">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>23</div>
+        <div><span>标签</span>29</div>
+        <div><span>分类</span>9</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="友人帐">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                友人帐
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/tech.html" title="技术栈">
+            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
+            <div class="mdui-list-item-content">
+                技术栈
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于我">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于我
+            </div>
+        </a>
+        
+    </div>
+    
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1705577186410"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/47215249"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/hawcat/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:Yht1128@outlook.com"
+			target="_blank"
+			mdui-tooltip="{content: 'mail'}"
+			style="
+				color: rgb(30, 136, 229);
+				background-color: rgba(30, 136, 229, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://hawcat.com/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/AI/">AI</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Deep-Learning/">Deep-Learning</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Dev/">Dev</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/HardWare/">HardWare</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/NetWorks/">NetWorks</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ops/">Ops</a>
+          <span class="category-list-count">3</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Python/">Python</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Tests/">Tests</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Travels/">Travels</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/ARM/" style="font-size: 13.33px;">ARM</a> <a href="/tags/Android/" style="font-size: 13.33px;">Android</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/CV/" style="font-size: 13.33px;">CV</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/ESP32/" style="font-size: 10px;">ESP32</a> <a href="/tags/GuangZhou/" style="font-size: 10px;">GuangZhou</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/LLM/" style="font-size: 13.33px;">LLM</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/NLP/" style="font-size: 10px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/Paper/" style="font-size: 13.33px;">Paper</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/Res/" style="font-size: 10px;">Res</a> <a href="/tags/Routers/" style="font-size: 10px;">Routers</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Software-Tests/" style="font-size: 13.33px;">Software-Tests</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/Tensorflow/" style="font-size: 10px;">Tensorflow</a> <a href="/tags/Yolo/" style="font-size: 10px;">Yolo</a> <a href="/tags/env/" style="font-size: 10px;">env</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(29);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">1</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/01/17/anaconda/">为什么推荐别人使用Anaconda等虚拟环境，我自己却不用</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/01/finetune/">微调大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/19/transformer/">transformer/力大砖飞</a>
+          </li>
+        
+          <li>
+            <a href="/2023/09/11/e4s/">e4s Windows复现部署教程</a>
+          </li>
+        
+          <li>
+            <a href="/2023/08/16/llama2/">llama2-13b中文语言对话模型部署</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+   
+    <div class="nexmoe-copyright">
+        &copy; 2024 hawcat
+        Theme by <a href="https://nexmoe.com/" target="_blank">Nexmoe</a>
+        Secondary-development <a href="https://hawcat.cn" target="_blank">hawcat</a>
+        <br><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备19027376号</a>
+<br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral">
+<img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a>
+
+    </div>
+</div><!-- .nexmoe-drawer --></div><div id="nexmoe-content"><div class="nexmoe-primary"><div class="nexmoe-post">
+  <article>
+    
+        <div class="nexmoe-post-cover absolute" style="padding-top: 62.5%;"> 
+            <img src="https://assets.ekgc.cn//upload/open/20170731/1501469017372199.jpg" alt="软件测试 - 记录一下面试常用知识" loading="lazy">
+            <h1>软件测试 - 记录一下面试常用知识</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2023年05月12日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/Tests/">Tests</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <h2 id="黑盒测试"><a href="#黑盒测试" class="headerlink" title="黑盒测试:"></a>黑盒测试:</h2><p>黑盒测试也称功能测试或数据驱动测试，它是在已知产品所应具有的功能，通过测试来检测每个功能是否都能正常使用，在测试时，把程序看作一个不能打开的黑盆子，在完全不考虑程序内部结构和内部特性的情况下，测试者在程序接口进行测试，它只检查程序功能是否按照需求规格说明书的规定正常使用，程序是否能适当地接收输入数锯而产生正确的输出信息，并且保持外部信息（如数据库或文件）的完整性。</p>
+<p>“黑盒”法着眼于程序外部结构、不考虑内部逻辑结构、针对软件界面和软件功能进行测试。“黑盒”法是穷举输入测试，只有把所有可能的输入都作为测试情况使用，才能以这种方法查出程序中所有的错误。实际上测试情况有无穷多个，因此不仅要测试所有合法的输入，而且还要对那些不合法但是可能的输入进行测试。</p>
+<p>常用的黑盒测试方法有：等价类划分法；边界值分析法；因果图法；场景法；正交实验设计法；判定表驱动分析法；错误推测法；功能图分析法。</p>
+<h2 id="白盒测试："><a href="#白盒测试：" class="headerlink" title="白盒测试："></a>白盒测试：</h2><p>白盒测试也称为结构测试或逻辑驱动测试，是针对被测单元内部是如何进行工作的测试。它根据程序的控制结构设计测试用例，主要用于软件或程序验证。白盒测试法检查程序内部逻辑结构，对所有的逻辑路径进行测试，是一种穷举路径的测试方法，但即使每条路径都测试过了，但仍然有可能存在错误。因为：穷举路径测试无法检查出程序本身是否违反了设计规范，即程序是否是一个错误的程序；穷举路径测试不可能检查出程序因为遗漏路径而出错；穷举路径测试发现不了一些与数据相关的错误。</p>
+<p>白盒测试需要遵循的原则有：1. 保证一个模块中的所有独立路径至少被测试一次；2. 所有逻辑值均需要测试真（true）和假（false）；两种情况；3. 检查程序的内部数据结构，保证其结构的有效性；4. 在上下边界及可操作范围内运行所有循环。</p>
+<p>常用白盒测试方法：语句覆盖、判定覆盖、条件覆盖、判定条件覆盖、条件组合覆盖、路径覆盖。</p>
+<p>白盒测试中的逻辑覆盖包括语句覆盖、判定覆盖、条件覆盖、判定&#x2F;条件覆盖、条件组合覆盖和路径覆盖。六种覆盖标准发现错误的能力呈由弱到强的变化：</p>
+<p>1.语句覆盖每条语句至少执行一次。</p>
+<p>2.判定覆盖每个判定的每个分支至少执行一次。</p>
+<p>3.条件覆盖每个判定的每个条件应取到各种可能的值。</p>
+<p>4.判定&#x2F;条件覆盖同时满足判定覆盖条件覆盖。</p>
+<p>5.条件组合覆盖每个判定中各条件的每一种组合至少出现一次。</p>
+<p>6.路径覆盖使程序中每一条可能的路径至少执行一次。</p>
+<h2 id="软件质量模型六大特征："><a href="#软件质量模型六大特征：" class="headerlink" title="软件质量模型六大特征："></a>软件质量模型六大特征：</h2><p>功能性，可靠性，易用性，效率性，可维护性，可移植性。<br>编写用例可以参考</p>
+<h2 id="软件测试流程：（当时没回答上来忘了）"><a href="#软件测试流程：（当时没回答上来忘了）" class="headerlink" title="软件测试流程：（当时没回答上来忘了）"></a>软件测试流程：（当时没回答上来忘了）</h2><p>软件测试工作流程：</p>
+<p>　　1、需求分析、需求评审</p>
+<p>　　需求分析和评审就是分析客户的需求可不可行，需要怎么进行测试。</p>
+<p>　　2、编写测试计划</p>
+<p>　　编写测试计划通俗一点讲就是什么人在什么时间做什么事，最后产出什么东西。那也就是测试人员要测试哪些模块、在什么期限内，提交哪些文档。</p>
+<p>　　3、编写测试用例、用例评审</p>
+<p>　　测试用例就是指导测试的文档，比如我们要测试商城登录、买东西等功能，通过测试方法和策略设计测试用例。</p>
+<p>　　评审就是评价审查，不能想当然该怎么测。不能只是输入正确的用户名和密码，能登录进去就完事了。作为软测工程师需要有破坏性，比如密码输错时怎么办，会不会有相应的报错等等。</p>
+<p>　　4、执行测试、提交bug、回归测试</p>
+<p>　　Bug就是缺陷，发现bug之后，要提交给开发人员让他们去修改，然后进行回归测试，验证开发人员有没有改好。</p>
+<p>　　5、编写测试总结报告</p>
+<p>　　Bug都改好了之后，要编写测试总结报告，这款软件的质量如何。</p>
+<h2 id="TCP-x2F-IP协议簇-模型："><a href="#TCP-x2F-IP协议簇-模型：" class="headerlink" title="TCP&#x2F;IP协议簇 模型："></a>TCP&#x2F;IP协议簇 模型：</h2><p>TCP的三次握手</p>
+<p><em>最开始的时候客户端和服务器都是处于CLOSED状态。主动打开连接的为客户端，被动打开连接的是服务器。</em></p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://img-blog.csdnimg.cn/114bd9b53c554319ae0db15b57b472b8.gif#pic_center" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"></p>
+<p>TCP协议的四次挥手</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://img-blog.csdnimg.cn/0c17d72769aa4bd2b95bbaee1749b39d.gif#pic_center" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"></p>
+<p>TCP&#x2F;IP协议在一定程度上参考了OSI的体系结构。OSI模型共有七层，但是比较复杂，所以在TCP&#x2F;IP协议中，它们被简化为了四个层次</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="https://img-blog.csdnimg.cn/20201028140048366.jpg?x-oss-process=image/watermark,type_ZmFuZ3poZW5naGVpdGk,shadow_10,text_aHR0cHM6Ly9ibG9nLmNzZG4ubmV0L3d3eTAzMjQ=,size_16,color_FFFFFF,t_70#pic_center" alt="在这里插入图片描述" data-caption="在这里插入图片描述" loading="lazy"></p>
+<p>TCP（传输控制协议）：</p>
+<ul>
+<li>TCP是一种面向连接的协议，提供可靠的数据传输。</li>
+<li>在TCP连接中，通信双方需要建立连接，进行数据的可靠传输，确保数据的完整性和顺序性。</li>
+<li>TCP使用流控制、拥塞控制和重传机制来保证数据的可靠性。</li>
+<li>TCP适用于对数据传输的可靠性要求较高的应用，如文件传输、电子邮件、Web浏览等。</li>
+<li>TCP连接的建立和断开需要较多的开销，通信过程中会有一定的延迟。</li>
+</ul>
+<p>UDP（用户数据报协议）：</p>
+<ul>
+<li><p>UDP是一种无连接的协议，提供不可靠的数据传输。</p>
+</li>
+<li><p>在UDP中，数据被分成小的数据报进行传输，每个数据报都是独立的，可能会丢失、重复或乱序。</p>
+</li>
+<li><p>UDP不提供流控制和拥塞控制，因此传输速度较快，延迟较低。</p>
+</li>
+<li><p>UDP适用于对实时性要求较高的应用，如音频&#x2F;视频传输、实时游戏等。</p>
+</li>
+<li><p>由于UDP不保证数据的可靠性，因此需要在应用层进行额外的处理，如数据确认和重传。</p>
+</li>
+</ul>
+<h2 id="GET与POST区别："><a href="#GET与POST区别：" class="headerlink" title="GET与POST区别："></a>GET与POST区别：</h2><p>当我们进行网络通信时，GET和POST是两种常见的HTTP请求方法，它们有以下区别：</p>
+<ol>
+<li>GET方法：<ul>
+<li>GET方法用于从服务器获取数据。</li>
+<li>在GET请求中，数据通过URL的查询参数（query parameters）进行发送，将数据附加在URL的末尾。例如 <a href="https://hawcat.cn/query?hawcat">https://hawcat.cn/query?hawcat</a></li>
+<li>GET请求将数据暴露在URL中，因此可以被其他人看到和收集，不适合用于传输敏感信息。</li>
+<li>GET请求对数据长度有限制，因为URL的长度是有限制的。</li>
+</ul>
+</li>
+<li>POST方法：<ul>
+<li>POST方法用于向服务器提交数据。</li>
+<li>在POST请求中，数据通过请求体（request body）进行发送，不会显示在URL中。</li>
+<li>POST请求对数据的长度没有限制，可以传输大量的数据。</li>
+<li>POST请求更安全，适用于传输敏感信息，因为数据不会暴露在URL中。</li>
+</ul>
+</li>
+</ol>
+<p>简而言之，GET方法用于从服务器获取数据，将数据附加在URL中，适用于非敏感数据的传输。而POST方法用于向服务器提交数据，数据通过请求体发送，适用于传输敏感信息和大量数据的场景。</p>
+
+    <p id="hitokoto">
+<a href="#" id="hitokoto_text">:D 获取中...</a>
+</p>
+<script>
+fetch('https://v1.hitokoto.cn')
+  .then(response => response.json())
+  .then(data => {
+    const hitokoto = document.querySelector('#hitokoto_text')
+    hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+    hitokoto.innerText = data.hitokoto
+  })
+  .catch(console.error)
+</script></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>hawcat<br>
+        <strong>本文链接：</strong><a href="https://hawcat.cn/2023/05/12/testface/" title="https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;05&#x2F;12&#x2F;testface&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;hawcat.cn&#x2F;2023&#x2F;05&#x2F;12&#x2F;testface&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Software-Tests/" rel="tag">Software-Tests</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/TCP-IP/" rel="tag">TCP/IP</a>
+    
+</div>
+  
+  
+    <script async src="/js/copy-codeblock.js?v=1705577186374"></script>
+  
+
+  
+      <div class="nexmoe-post-footer">
+          <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+</head>
+<body>
+  <div id="gitalk-container"></div>
+  <script>
+      const gitalk = new Gitalk({
+        clientID: '2f6d5dc2b9efeda733bb',          // 8d8e96********797026d3
+        clientSecret: '0c54a7dd933ac2d84f9a03058a973c065e5869af',  // secrets**********secrets
+        repo: 'Gittalk',          // blogtalk
+        owner: 'hawcat',   // WeiyiGeek
+        admin: ['hawcat'], // ['WeiyiGeek']
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+      gitalk.render('gitalk-container')
+</script>
+</body>
+
+      </div>
+  
+</div></div><div class="nexmoe-post-right">    <div class="nexmoe-fixed">
+        <div class="nexmoe-tool">
+
+            
+
+            
+            
+            <button class="mdui-fab catalog" style="overflow:unset;">
+                <i class="nexmoefont icon-i-catalog"></i>
+                <div class="nexmoe-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%BB%91%E7%9B%92%E6%B5%8B%E8%AF%95"><span class="toc-number">1.</span> <span class="toc-text">黑盒测试:</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%99%BD%E7%9B%92%E6%B5%8B%E8%AF%95%EF%BC%9A"><span class="toc-number">2.</span> <span class="toc-text">白盒测试：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E8%B4%A8%E9%87%8F%E6%A8%A1%E5%9E%8B%E5%85%AD%E5%A4%A7%E7%89%B9%E5%BE%81%EF%BC%9A"><span class="toc-number">3.</span> <span class="toc-text">软件质量模型六大特征：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%BD%AF%E4%BB%B6%E6%B5%8B%E8%AF%95%E6%B5%81%E7%A8%8B%EF%BC%9A%EF%BC%88%E5%BD%93%E6%97%B6%E6%B2%A1%E5%9B%9E%E7%AD%94%E4%B8%8A%E6%9D%A5%E5%BF%98%E4%BA%86%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">软件测试流程：（当时没回答上来忘了）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#TCP-x2F-IP%E5%8D%8F%E8%AE%AE%E7%B0%87-%E6%A8%A1%E5%9E%8B%EF%BC%9A"><span class="toc-number">5.</span> <span class="toc-text">TCP&#x2F;IP协议簇 模型：</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#GET%E4%B8%8EPOST%E5%8C%BA%E5%88%AB%EF%BC%9A"><span class="toc-number">6.</span> <span class="toc-text">GET与POST区别：</span></a></li></ol>
+                </div>
+            </button>
+            
+
+            
+
+            <a href="#nexmoe-content" class="backtop toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+        </div>
+    </div>
+</div></div><div id="nexmoe-footer"><!--!--></div><div><div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+</div><div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+</div></body></html>
