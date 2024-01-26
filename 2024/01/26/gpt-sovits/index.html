@@ -1,0 +1,516 @@
+<!doctype html>
+<html lang="zh"><head>
+<title>GPT-SoVITS的使用体验、目前主流TTS对比、我的优化方向 - hawcat的时光轴</title>
+<meta charset="UTF-8">
+<meta name="keywords" content="">
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5">
+
+<link rel="shortcut icon" href="/favicon.ico" type="image/x-icon" />
+<meta name="description" content="声音克隆（gpt-sovits）近期因为做数字人，需要对TTS的一些技术有所了解，尝试了很多。在线服务包括heygen、elevenlabs这些，前者并不单独提供声音克隆服务，而是作为自家数字人的必要附属，效果很好，特别是针对多语种混合，应该是做了很多功课在上面的。后者是完完全全的TTS服务提供商，中文效果不好，会带有奇怪的口音，可能训练多语种模型的时候关于中文的数据集不是特别多，反之如果是做翻译">
+<meta property="og:type" content="article">
+<meta property="og:title" content="GPT-SoVITS的使用体验、目前主流TTS对比、我的优化方向">
+<meta property="og:url" content="https://hawcat.cn/2024/01/26/gpt-sovits/index.html">
+<meta property="og:site_name" content="hawcat的时光轴">
+<meta property="og:description" content="声音克隆（gpt-sovits）近期因为做数字人，需要对TTS的一些技术有所了解，尝试了很多。在线服务包括heygen、elevenlabs这些，前者并不单独提供声音克隆服务，而是作为自家数字人的必要附属，效果很好，特别是针对多语种混合，应该是做了很多功课在上面的。后者是完完全全的TTS服务提供商，中文效果不好，会带有奇怪的口音，可能训练多语种模型的时候关于中文的数据集不是特别多，反之如果是做翻译">
+<meta property="og:locale">
+<meta property="og:image" content="https://hawcat.cn/imgs/$%7Bfiilename%7D/coqui-log-green-TTS.png">
+<meta property="og:image" content="https://hawcat.cn/imgs/$%7Bfiilename%7D/v2-abd1b0607839c8aaa4a36514ec77d14b_1440w.webp">
+<meta property="og:image" content="https://hawcat.cn/imgs/$%7Bfiilename%7D/image-20240126155240281.png">
+<meta property="article:published_time" content="2024-01-26T04:19:36.000Z">
+<meta property="article:modified_time" content="2024-01-26T08:26:28.275Z">
+<meta property="article:author" content="hawcat">
+<meta property="article:tag" content="Voice Clone">
+<meta property="article:tag" content="TTS">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://hawcat.cn/imgs/$%7Bfiilename%7D/coqui-log-green-TTS.png">
+
+<link rel="stylesheet" href="/lib/fancybox/fancybox.css">
+<link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
+
+
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1706258504093">
+
+<link rel="stylesheet" href="/css/style.css?v=1706258504093">
+
+
+
+
+    
+        <link rel="stylesheet" href="/custom.css?v=1706258504093">
+    
+
+
+
+<script src="/lib/mdui_043tiny/mdui.js" async></script>
+<script src="/lib/fancybox/fancybox.umd.js" async></script>
+<script src="/lib/lax.min.js" async></script>
+
+
+<script async src="/js/app.js?v=1706258504093"></script>
+
+ 
+
+<!-- Global site tag (gtag.js) - Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-4D4ZJ9G024"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag("js", new Date());
+
+  gtag("config", "G-4D4ZJ9G024");
+</script>
+
+<meta name="generator" content="Hexo 6.3.0"></head><body class="nexmoe mdui-drawer-body-left"><div id="nexmoe-background"><div class="nexmoe-bg" style="background-image: url(https://cdn.hawcat.cn/EuropeFromISS_ZH-CN0722816540_UHD.jpg)"></div><div class="mdui-appbar mdui-shadow-0"><div class="mdui-toolbar"><a class="mdui-btn mdui-btn-icon mdui-ripple" mdui-drawer="{target: &#039;#drawer&#039;, swipe: true}" title="menu"><i class="mdui-icon nexmoefont icon-menu"></i></a><div class="mdui-toolbar-spacer"></div><a class="mdui-btn mdui-btn-icon" href="/" title="hawcat"><img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat"></a></div></div></div><div id="nexmoe-header"><div class="nexmoe-drawer mdui-drawer" id="drawer">
+    <div class="nexmoe-avatar mdui-ripple">
+        <a href="/" title="hawcat">
+            <img src="https://cdn.hawcat.cn/webAvatar/hawcat11673517380897901" alt="hawcat" alt="hawcat">
+        </a>
+    </div>
+    <div class="nexmoe-count">
+        <div><span>文章</span>25</div>
+        <div><span>标签</span>33</div>
+        <div><span>分类</span>9</div>
+    </div>
+    <div class="nexmoe-list mdui-list" mdui-collapse="{accordion: true}">
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/" title="首页">
+            <i class="mdui-list-item-icon nexmoefont icon-home"></i>
+            <div class="mdui-list-item-content">
+                首页
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/archive.html" title="归档">
+            <i class="mdui-list-item-icon nexmoefont icon-container"></i>
+            <div class="mdui-list-item-content">
+                归档
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/PY.html" title="友人帐">
+            <i class="mdui-list-item-icon nexmoefont icon-unorderedlist"></i>
+            <div class="mdui-list-item-content">
+                友人帐
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/tech.html" title="技术栈">
+            <i class="mdui-list-item-icon nexmoefont icon-coffee"></i>
+            <div class="mdui-list-item-content">
+                技术栈
+            </div>
+        </a>
+        
+        <a class="nexmoe-list-item mdui-list-item mdui-ripple false" href="/about.html" title="关于我">
+            <i class="mdui-list-item-icon nexmoefont icon-info-circle"></i>
+            <div class="mdui-list-item-content">
+                关于我
+            </div>
+        </a>
+        
+    </div>
+    
+    
+        
+        <div class="nexmoe-widget-wrap">
+    <div class="nexmoe-widget nexmoe-search">
+        
+            <form id="search_form">
+                <label><input class="st-default-search-input" id="search_value" name="q" type="search" placeholder="搜索" style="
+                    font-size: 15px !important;
+                    height: 56px !important;
+                    background-image: none;
+                "></label>
+            </form>
+         
+    </div>
+</div>
+
+
+	<script async src="/js/search.js?v=1706258504093"></script>
+
+
+
+    
+        
+        <div class="nexmoe-widget-wrap">
+	<div class="nexmoe-widget nexmoe-social">
+		<a
+			class="mdui-ripple"
+			href="https://space.bilibili.com/47215249"
+			target="_blank"
+			mdui-tooltip="{content: '哔哩哔哩'}"
+			style="
+				color: rgb(231, 106, 141);
+				background-color: rgba(231, 106, 141, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-bilibili"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://github.com/hawcat/"
+			target="_blank"
+			mdui-tooltip="{content: 'GitHub'}"
+			style="
+				color: rgb(25, 23, 23);
+				background-color: rgba(25, 23, 23, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-github"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="mailto:Yht1128@outlook.com"
+			target="_blank"
+			mdui-tooltip="{content: 'mail'}"
+			style="
+				color: rgb(30, 136, 229);
+				background-color: rgba(30, 136, 229, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-mail-fill"
+			></i> </a
+		><a
+			class="mdui-ripple"
+			href="https://hawcat.com/atom.xml"
+			target="_blank"
+			mdui-tooltip="{content: 'RSS'}"
+			style="
+				color: rgb(247, 132, 34);
+				background-color: rgba(247, 132, 34, .1);
+			"
+		>
+			<i
+				class="nexmoefont icon-rss"
+			></i> </a
+		>
+	</div>
+</div>
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章分类</h3>
+    <div class="nexmoe-widget">
+
+      <ul class="category-list">
+
+        
+
+
+        
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/AI/">AI</a>
+          <span class="category-list-count">5</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Deep-Learning/">Deep-Learning</a>
+          <span class="category-list-count">2</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Dev/">Dev</a>
+          <span class="category-list-count">8</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/HardWare/">HardWare</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/NetWorks/">NetWorks</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Ops/">Ops</a>
+          <span class="category-list-count">4</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Python/">Python</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Tests/">Tests</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+
+        <li class="category-list-item">
+          <a class="category-list-link" href="/categories/Travels/">Travels</a>
+          <span class="category-list-count">1</span>
+        </li>
+
+        
+      </ul>
+
+    </div>
+  </div>
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <div id="randomtagcloud" class="nexmoe-widget tagcloud nexmoe-rainbow">
+      <a href="/tags/ARM/" style="font-size: 13.33px;">ARM</a> <a href="/tags/Android/" style="font-size: 13.33px;">Android</a> <a href="/tags/C/" style="font-size: 10px;">C#</a> <a href="/tags/CV/" style="font-size: 13.33px;">CV</a> <a href="/tags/Docker/" style="font-size: 10px;">Docker</a> <a href="/tags/ESP32/" style="font-size: 10px;">ESP32</a> <a href="/tags/GuangZhou/" style="font-size: 10px;">GuangZhou</a> <a href="/tags/Java/" style="font-size: 20px;">Java</a> <a href="/tags/LLM/" style="font-size: 13.33px;">LLM</a> <a href="/tags/Linux/" style="font-size: 13.33px;">Linux</a> <a href="/tags/Mysql/" style="font-size: 10px;">Mysql</a> <a href="/tags/NLP/" style="font-size: 10px;">NLP</a> <a href="/tags/Nginx/" style="font-size: 10px;">Nginx</a> <a href="/tags/Oracle/" style="font-size: 10px;">Oracle</a> <a href="/tags/Paper/" style="font-size: 13.33px;">Paper</a> <a href="/tags/Postman/" style="font-size: 10px;">Postman</a> <a href="/tags/Python/" style="font-size: 13.33px;">Python</a> <a href="/tags/Pytorch/" style="font-size: 10px;">Pytorch</a> <a href="/tags/Raspberry-Pi/" style="font-size: 10px;">Raspberry Pi</a> <a href="/tags/Res/" style="font-size: 10px;">Res</a> <a href="/tags/Routers/" style="font-size: 10px;">Routers</a> <a href="/tags/SVN/" style="font-size: 10px;">SVN</a> <a href="/tags/Shell/" style="font-size: 10px;">Shell</a> <a href="/tags/Software-Tests/" style="font-size: 13.33px;">Software-Tests</a> <a href="/tags/Spring/" style="font-size: 16.67px;">Spring</a> <a href="/tags/Swagger/" style="font-size: 10px;">Swagger</a> <a href="/tags/TCP-IP/" style="font-size: 10px;">TCP/IP</a> <a href="/tags/TTS/" style="font-size: 10px;">TTS</a> <a href="/tags/Tensorflow/" style="font-size: 10px;">Tensorflow</a> <a href="/tags/Version-Control/" style="font-size: 10px;">Version Control</a> <a href="/tags/Voice-Clone/" style="font-size: 10px;">Voice Clone</a> <a href="/tags/Yolo/" style="font-size: 10px;">Yolo</a> <a href="/tags/env/" style="font-size: 10px;">env</a>
+    </div>
+    
+      <script>
+        var maxTagcloud = parseInt(17);
+        var tags_length = parseInt(33);
+        var tags_arr = [];
+        for(var i = 0; i < tags_length; i++){
+          tags_arr.push(i);
+        }
+        tags_arr.sort(function (l, r) {
+          return Math.random() > 0.5 ? -1 : 1;
+        });
+        tags_arr = tags_arr.slice(0, maxTagcloud < tags_length ? tags_length - maxTagcloud : 0);
+        for(var tag_i = 0; tag_i < tags_arr.length; tag_i++){
+          document.getElementById("randomtagcloud").children[tags_arr[tag_i]].style.display = 'none';
+        }
+      </script>
+    
+  </div>
+
+    
+        
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">文章归档</h3>
+    <div class="nexmoe-widget">
+      <ul class="archive-list"><li class="archive-list-item"><a class="archive-list-link" href="/archives/2024/">2024</a><span class="archive-list-count">3</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2023/">2023</a><span class="archive-list-count">16</span></li><li class="archive-list-item"><a class="archive-list-link" href="/archives/2022/">2022</a><span class="archive-list-count">6</span></li></ul>
+    </div>
+  </div>
+
+
+
+    
+        
+        
+  <div class="nexmoe-widget-wrap">
+    <h3 class="nexmoe-widget-title">最新文章</h3>
+    <div class="nexmoe-widget">
+      <ul>
+        
+          <li>
+            <a href="/2024/01/26/svn-create/">SVN仓库创建、配置记录</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/26/gpt-sovits/">GPT-SoVITS的使用体验、目前主流TTS对比、我的优化方向</a>
+          </li>
+        
+          <li>
+            <a href="/2024/01/17/anaconda/">为什么推荐别人使用Anaconda等虚拟环境，我自己却不用</a>
+          </li>
+        
+          <li>
+            <a href="/2023/11/01/finetune/">微调大模型</a>
+          </li>
+        
+          <li>
+            <a href="/2023/10/19/transformer/">transformer/力大砖飞</a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+
+    
+        
+   
+    <div class="nexmoe-copyright">
+        &copy; 2024 hawcat
+        Theme by <a href="https://nexmoe.com/" target="_blank">Nexmoe</a>
+        Secondary-development <a href="https://hawcat.cn" target="_blank">hawcat</a>
+        <br><a target="_blank" href="https://beian.miit.gov.cn/">湘ICP备19027376号</a>
+<br><a target="_blank" href="https://www.upyun.com/?utm_source=lianmeng&utm_medium=referral">
+<img src="https://i.dawnlab.me/c0268c1e6cfd0863d6ba35be1575941a.png" width="150px"></a>
+
+    </div>
+</div><!-- .nexmoe-drawer --></div><div id="nexmoe-content"><div class="nexmoe-primary"><div class="nexmoe-post">
+  <article>
+    
+        <div class="nexmoe-post-cover absolute" style="padding-top: 62.5%;"> 
+            <img src="../imgs/$%7Bfiilename%7D/v2-272ea8b91eba5a558f965261d36f404d_1440w.jpeg" alt="GPT-SoVITS的使用体验、目前主流TTS对比、我的优化方向" loading="lazy">
+            <h1>GPT-SoVITS的使用体验、目前主流TTS对比、我的优化方向</h1>
+        </div>
+    
+    
+    <div class="nexmoe-post-meta">
+    <div class="nexmoe-rainbow">
+        <a class="nexmoefont icon-calendar-fill">2024年01月26日</a>
+        
+            <a class="nexmoefont icon-appstore-fill -link" href="/categories/AI/">AI</a>
+        
+        
+    </div>
+    
+    
+    
+    
+    
+</div>
+
+    <h2 id="声音克隆（gpt-sovits）"><a href="#声音克隆（gpt-sovits）" class="headerlink" title="声音克隆（gpt-sovits）"></a>声音克隆（gpt-sovits）</h2><p>近期因为做数字人，需要对TTS的一些技术有所了解，尝试了很多。在线服务包括heygen、elevenlabs这些，前者并不单独提供声音克隆服务，而是作为自家数字人的必要附属，效果很好，特别是针对多语种混合，应该是做了很多功课在上面的。后者是完完全全的TTS服务提供商，中文效果不好，会带有奇怪的口音，可能训练多语种模型的时候关于中文的数据集不是特别多，反之如果是做翻译之类的服务的话，elevenlabs还是有一定优势的。两者基本上都算zero-shot，前者需要上传的视频满1分钟，并且需要说满话（<em>heygen会提供给你一些台词本叫你念）</em>，后者任意长度声音样本，5s-3min都行，我的尝试下，如果要涉及到中文，跟样本声音的长度就没关系了，再饱和还是会有口音，属于是模型的泛化性不是很强了<em>（虽然他自己官方宣称Multilingual）</em></p>
+<p>开源项目也跑过一些，coqui-ai🐸的TTSv2、微软的<strong>VALL-E X</strong>、和一些Sovits的衍生项目。</p>
+<p>coqui-a的TTSv2整体效果要好于elevenlabs，它模型的迭代速度也是很快的，也支持Multilingual。但唯一美中不足的是存在良品率，有时候生成的声音文件莫名多了一段空时长，有时候也会出现口音、电音等奇奇怪怪的问题，并且长文本需要进行切分生成再合成，由于有底噪的存在不得不加降噪才能让出来的成品声音不像是剪切过的。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="/../imgs/$%7Bfiilename%7D/coqui-log-green-TTS.png" alt="coqui-log-green-TTS.png" data-caption="coqui-log-green-TTS.png" loading="lazy"></p>
+<p>微软的<strong>VALL-E X</strong>更多像是一种学术上的成果，从huggingface space上的demo效果听起来没有目前主流的tts效果好。</p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="/../imgs/$%7Bfiilename%7D/v2-abd1b0607839c8aaa4a36514ec77d14b_1440w.webp" alt="img" data-caption="img" loading="lazy"></p>
+<p>SoVITS相关的话目前最好的就是最新的GPT-SoVITS了，<a target="_blank" rel="noopener" href="https://github.com/RVC-Boss/GPT-SoVITS">RVC-Boss&#x2F;GPT-SoVITS: 1 min voice data can also be used to train a good TTS model! (few shot voice cloning) (github.com)</a>，作者似乎B站还有号，大家有时间可以关注一下。</p>
+<p>说是中文最强也不过分，它会对你的声音样本进行切分，每一段单独编码，然后进行训练、微调，生成一个单独属于你自己上传这段声音样本的模型，之后用生成的模型再加上一段你自己的相关音频作为reference进行推理。但目前仅支持中、日、英三种语言，如果有针对中文做克隆的产品这个技术可能会有用。</p>
+<p>我这里上传一个用我自己声音生成的音频跟大家分享一下，效果真的达到以假乱真的程度了。<br>​<audio id="audio" controls="" preload="none"><br>      <source id="wav" src="https://cdn.hawcat.cn/tmpr9chy0cs.wav"><br></audio></p>
+<p><img onerror="imgOnError(this);" data-fancybox="gallery" src="/../imgs/$%7Bfiilename%7D/image-20240126155240281.png" alt="image-20240126155240281" data-caption="image-20240126155240281" loading="lazy"></p>
+<h2 id="分支内容"><a href="#分支内容" class="headerlink" title="分支内容"></a>分支内容</h2><p>clone了它的代码，发现作者为了便于使用，大部分都是用的gradio做的网页，虽然有API的存在但还是不是很便于工程化，并且因为做音频识别的库用到了modelscope和funasr，这两个的版本不一样还不能注册进modelscope的pipeline里面，非常的鸡肋，这个仓库的40%的issue都是在说这两个库的问题。取代的是faster_whisper库，需要用它来进行语音识别，同时还要用到spacy推理时做切分。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">pip install faster_whisper</span><br><span class="line"></span><br><span class="line">pip install spacy</span><br><span class="line"></span><br><span class="line">python -m spacy download zh_core_web_sm</span><br></pre></td></tr></table></figure>
+
+<p>于是为了使用的便捷性，我重写了一个统一的命令行接口，使用控制台参数传递部分需要的参数，并且规范了其中的一些代码，去掉了funasr，改用whisper，并且新的list也兼容原流程的格式。为了工程化，还支持用户训练的自己的模型单独进行保存，参数里面提供了一个work_dir用于保存训练、微调时的模型，便于下次使用。</p>
+<p>但为了易用，例如sovits和gpt的训练、微调阶段我都传入了默认的batch_size和epoch，但接口我都暴露出来了，你们使用的时候可以进行修改。</p>
+<p>如果你使用我写的inference_cli.py的话，请注意你运行程序的根目录是需要在GPT_SoVITS下的，外层所有的代码都是不需要的，我已经做了迁移和兼容。</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Usage：</span><br><span class="line">cd GPT-SoVITS</span><br><span class="line">python inference_cli.py --work_dir <span class="string">&quot;C:\\Users\\hawcat\\Desktop\\preparation&quot;</span> --input_wav_file <span class="string">&quot;input.wav&quot;</span> --exp_name <span class="string">&quot;test&quot;</span> --tts_prompt <span class="string">&quot;今天我很荣幸作为一个青藏高原的孩子能来到联合国讲我和动物朋友们故事。&quot;</span></span><br></pre></td></tr></table></figure>
+
+<p>参数介绍：</p>
+<ul>
+<li>work_dir：工作目录，保存的所有模型、切分的音频、推理输出的音频都会放在这个文件夹目录下。</li>
+<li>input_wav_file：输入音频，用户上传的声音样本，作者推荐1min左右。</li>
+<li>exp_name：模型名称，类似于特征码的参数。</li>
+<li>tts_prompt：推理生成的文本。</li>
+</ul>
+<p>具体的fork地址在这里<a target="_blank" rel="noopener" href="https://github.com/hawcat/GPT-SoVITS">hawcat&#x2F;GPT-SoVITS: 1 min voice data can also be used to train a good TTS model! (few shot voice cloning) (github.com)</a>，因为改动太大就不提交pr了。</p>
+<p><em>我自己的版本似乎丢掉了去背景音的流程，下次有空再更新吧….</em></p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>中文效果很好，但作者大部分代码写的很乱，我在重写cli的时候很困难….</p>
+
+    <p id="hitokoto">
+<a href="#" id="hitokoto_text">:D 获取中...</a>
+</p>
+<script>
+fetch('https://v1.hitokoto.cn')
+  .then(response => response.json())
+  .then(data => {
+    const hitokoto = document.querySelector('#hitokoto_text')
+    hitokoto.href = `https://hitokoto.cn/?uuid=${data.uuid}`
+    hitokoto.innerText = data.hitokoto
+  })
+  .catch(console.error)
+</script></p>
+
+  </article>
+
+  
+      
+    <div class="nexmoe-post-copyright">
+        <strong>本文作者：</strong>hawcat<br>
+        <strong>本文链接：</strong><a href="https://hawcat.cn/2024/01/26/gpt-sovits/" title="https:&#x2F;&#x2F;hawcat.cn&#x2F;2024&#x2F;01&#x2F;26&#x2F;gpt-sovits&#x2F;" target="_blank" rel="noopener">https:&#x2F;&#x2F;hawcat.cn&#x2F;2024&#x2F;01&#x2F;26&#x2F;gpt-sovits&#x2F;</a><br>
+        
+            <strong>版权声明：</strong>本文采用 <a href="https://creativecommons.org/licenses/by-nc-sa/3.0/cn/deed.zh" target="_blank">CC BY-NC-SA 3.0 CN</a> 协议进行许可
+
+        
+    </div>
+
+
+  
+  
+  <div class="nexmoe-post-meta nexmoe-rainbow">
+   
+    
+        <a class="nexmoefont icon-tag-fill -none-link" href="/tags/TTS/" rel="tag">TTS</a> <a class="nexmoefont icon-tag-fill -none-link" href="/tags/Voice-Clone/" rel="tag">Voice Clone</a>
+    
+</div>
+  
+  
+    <script async src="/js/copy-codeblock.js?v=1706258504072"></script>
+  
+
+  
+      <div class="nexmoe-post-footer">
+          <head>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.css">
+  <script src="https://cdn.jsdelivr.net/npm/gitalk@1/dist/gitalk.min.js"></script>
+</head>
+<body>
+  <div id="gitalk-container"></div>
+  <script>
+      const gitalk = new Gitalk({
+        clientID: '2f6d5dc2b9efeda733bb',          // 8d8e96********797026d3
+        clientSecret: '0c54a7dd933ac2d84f9a03058a973c065e5869af',  // secrets**********secrets
+        repo: 'Gittalk',          // blogtalk
+        owner: 'hawcat',   // WeiyiGeek
+        admin: ['hawcat'], // ['WeiyiGeek']
+        id: location.pathname,      // Ensure uniqueness and length less than 50
+        distractionFreeMode: false  // Facebook-like distraction free mode
+      })
+      gitalk.render('gitalk-container')
+</script>
+</body>
+
+      </div>
+  
+</div></div><div class="nexmoe-post-right">    <div class="nexmoe-fixed">
+        <div class="nexmoe-tool">
+
+            
+
+            
+            
+            <button class="mdui-fab catalog" style="overflow:unset;">
+                <i class="nexmoefont icon-i-catalog"></i>
+                <div class="nexmoe-toc">
+                    <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A3%B0%E9%9F%B3%E5%85%8B%E9%9A%86%EF%BC%88gpt-sovits%EF%BC%89"><span class="toc-number">1.</span> <span class="toc-text">声音克隆（gpt-sovits）</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%86%E6%94%AF%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">分支内容</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%80%BB%E7%BB%93"><span class="toc-number">3.</span> <span class="toc-text">总结</span></a></li></ol>
+                </div>
+            </button>
+            
+
+            
+
+            <a href="#nexmoe-content" class="backtop toc-link" aria-label="Back To Top" title="top"><button class="mdui-fab mdui-ripple"><i class="nexmoefont icon-caret-top"></i></button></a>
+        </div>
+    </div>
+</div></div><div id="nexmoe-footer"><!--!--></div><div><div id="nexmoe-search-space">
+	<div class="search-container">
+		<div class="search-header">
+			<div class="search-input-container">
+				<input
+					class="search-input"
+					type="text"
+					placeholder="搜索"
+					oninput="sinput();"
+				/>
+			</div>
+			<a class="search-close" onclick="sclose();">×</a>
+		</div>
+		<div class="search-body"></div>
+	</div>
+</div>
+</div><div><script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-2058306854838448" crossorigin="anonymous"></script>
+</div></body></html>
