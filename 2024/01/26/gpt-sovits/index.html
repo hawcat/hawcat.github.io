@@ -17,7 +17,7 @@
 <meta property="og:image" content="https://hawcat.cn/imgs/$%7Bfiilename%7D/v2-abd1b0607839c8aaa4a36514ec77d14b_1440w.webp">
 <meta property="og:image" content="https://hawcat.cn/imgs/$%7Bfiilename%7D/image-20240126155240281.png">
 <meta property="article:published_time" content="2024-01-26T04:19:36.000Z">
-<meta property="article:modified_time" content="2024-01-29T10:03:30.184Z">
+<meta property="article:modified_time" content="2024-01-29T10:04:33.740Z">
 <meta property="article:author" content="hawcat">
 <meta property="article:tag" content="Voice Clone">
 <meta property="article:tag" content="TTS">
@@ -28,15 +28,15 @@
 <link rel="stylesheet" href="/lib/mdui_043tiny/mdui.css">
 
 
-<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1706522616941">
+<link rel="stylesheet" href="/lib/iconfont/iconfont.css?v=1706522680754">
 
-<link rel="stylesheet" href="/css/style.css?v=1706522616941">
+<link rel="stylesheet" href="/css/style.css?v=1706522680754">
 
 
 
 
     
-        <link rel="stylesheet" href="/custom.css?v=1706522616941">
+        <link rel="stylesheet" href="/custom.css?v=1706522680754">
     
 
 
@@ -46,7 +46,7 @@
 <script src="/lib/lax.min.js" async></script>
 
 
-<script async src="/js/app.js?v=1706522616942"></script>
+<script async src="/js/app.js?v=1706522680754"></script>
 
  
 
@@ -127,7 +127,7 @@
 </div>
 
 
-	<script async src="/js/search.js?v=1706522616942"></script>
+	<script async src="/js/search.js?v=1706522680754"></script>
 
 
 
@@ -382,7 +382,7 @@
     
 </div>
 
-    <h2 id="声音克隆（gpt-sovits）"><a href="#声音克隆（gpt-sovits）" class="headerlink" title="声音克隆（gpt-sovits）"></a>声音克隆（gpt-sovits）</h2><p>近期因为做数字人，需要对TTS的一些技术有所了解，尝试了很多。在线服务包括heygen、elevenlabs这些，前者并不单独提供声音克隆服务，而是作为自家数字人的必要附属，效果很好，特别是针对多语种混合，应该是做了很多功课在上面的。后者是完完全全的TTS服务提供商，中文效果不好，会带有奇怪的口音，可能训练多语种模型的时候关于中文的数据集不是特别多，反之如果是做翻译之类的服务的话，elevenlabs还是有一定优势的。两者基本上都算zero-shot，前者需要上传的视频满1分钟，并且需要说满话（<em>heygen会提供给你一些台词本叫你念）</em>，后者任意长度声音样本，5s-3min都行，我的尝试下，如果要涉及到中文，跟样本声音的长度就没关系了，再饱和还是会有口音，属于是模型的泛化性不是很强了<em>（虽然他自己官方宣称Multilingual）</em></p>
+    <h2 id="声音克隆（gpt-sovits）"><a href="#声音克隆（gpt-sovits）" class="headerlink" title="声音克隆（gpt-sovits）"></a>声音克隆（gpt-sovits）</h2><p>近期因为做数字人，需要对TTS的一些技术有所了解，尝试了很多。在线服务包括heygen、elevenlabs这些，前者并不单独提供声音克隆服务，而是作为自家数字人的必要附属，效果很好，特别是针对多语种混合，应该是做了很多功课在上面的。后者是完完全全的TTS服务提供商，中文效果不好，会带有奇怪的口音，可能训练多语种模型的时候关于中文的数据集不是特别多，反之如果是做翻译之类的服务的话，elevenlabs还是有一定优势的。两者基本上都算few-shot，前者需要上传的视频满1分钟，并且需要说满话（<em>heygen会提供给你一些台词本叫你念）</em>，后者任意长度声音样本，5s-3min都行，我的尝试下，如果要涉及到中文，跟样本声音的长度就没关系了，再饱和还是会有口音，属于是模型的泛化性不是很强了<em>（虽然他自己官方宣称Multilingual）</em></p>
 <p>开源项目也跑过一些，coqui-ai🐸的TTSv2、微软的<strong>VALL-E X</strong>、和一些Sovits的衍生项目。</p>
 <p>coqui-a的TTSv2整体效果要好于elevenlabs，它模型的迭代速度也是很快的，也支持Multilingual。但唯一美中不足的是存在良品率，有时候生成的声音文件莫名多了一段空时长，有时候也会出现口音、电音等奇奇怪怪的问题，并且长文本需要进行切分生成再合成，由于有底噪的存在不得不加降噪才能让出来的成品声音不像是剪切过的。</p>
 <p><img onerror="imgOnError(this);" data-fancybox="gallery" src="/../imgs/$%7Bfiilename%7D/coqui-log-green-TTS.png" alt="coqui-log-green-TTS.png" data-caption="coqui-log-green-TTS.png" loading="lazy"></p>
@@ -470,7 +470,7 @@ fetch('https://v1.hitokoto.cn')
 </div>
   
   
-    <script async src="/js/copy-codeblock.js?v=1706522616901"></script>
+    <script async src="/js/copy-codeblock.js?v=1706522680716"></script>
   
 
   
